@@ -3,7 +3,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = (env) => {
     return {
-        mode: env.mode,
+        mode: 'development',
         devtool: 'none',
         watch: env.mode === 'development',
         entry: {
