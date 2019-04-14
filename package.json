@@ -1,0 +1,32 @@
+{
+  "name": "vwlib",
+  "version": "1.0.0",
+  "description": "Javascript utilities for Velneo",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx webpack --config webpack.config.js --env.mode=production",
+    "dev": "npx webpack --config webpack.config.js --env.mode=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WaZhen/vwLib.git"
+  },
+  "keywords": [
+    "Velneo"
+  ],
+  "author": "wazhen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WaZhen/vwLib/issues"
+  },
+  "homepage": "https://github.com/WaZhen/vwLib#readme",
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/preset-env": "^7.4.3",
+    "babel-loader": "^8.0.5",
+    "clean-webpack-plugin": "^2.0.1",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.0"
+  }
+}
