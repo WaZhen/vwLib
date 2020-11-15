@@ -30,6 +30,7 @@
     "webpack-cli": "^3.3.0"
   },
   "dependencies": {
-    "comma-separated-values": "^3.6.4"
+    "comma-separated-values": "^3.6.4",
+    "schema-inspector": "^1.7.0"
   }
 }
