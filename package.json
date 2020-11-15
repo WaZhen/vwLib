@@ -28,5 +28,8 @@
     "clean-webpack-plugin": "^2.0.1",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.0"
+  },
+  "dependencies": {
+    "comma-separated-values": "^3.6.4"
   }
 }
