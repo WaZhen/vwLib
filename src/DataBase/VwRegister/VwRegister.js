@@ -1,11 +1,13 @@
 import VwTable from '../VwTable/VwTable';
 import VwMapper from '../VwMapper/VwMapper';
+import VwList from '../VwList/VwList';
+import VWTransactions from '../VWTransactions/VWTransactions';
 
 /**
  * Class for register operations
  * @extends VwTable
  * @param {VRegister} VRegister {@link https://doc.velneo.es/vregister.html|VRegister}
- * @param {VwMapper} vwMapper Optional. If provided, the class will map all the register values ORM like
+ * @param {VwMapper} vWMapper Optional. If provided, the class will map all the register values ORM like
  * @property {VRegister} vRegister Velneo VRegister {@link https://doc.velneo.es/vregister.html|VRegister}
  * @property {string} tableName Table name
  * @property {string} tableId Table id
@@ -17,46 +19,46 @@ export default class VwRegister extends VwTable {
     static GET_VALUES_OBJECT = 1;
     static GET_VALUES_KEY_VALUE = 2;
 
-    constructor(vRegister, vwMapper) {
-        const vwTableInfo = vRegister.tableInfo();
-        const idRef = vwTableInfo.idRef();
+    constructor(vRegister, vWMapper) {
+        const vWTableInfo = vRegister.tableInfo();
+        const idRef = vWTableInfo.idRef();
         super(idRef);
         this.vRegister = vRegister;
-        this.tableName = vwTableInfo.name();
-        this.tableId = vwTableInfo.id();
+        this.tableName = vWTableInfo.name();
+        this.tableId = vWTableInfo.id();
 
-        for(let key in vwMapper.mappedValues) {
-            const value = vwMapper.mappedValues[key](this.vRegister);
+        for (let key in vWMapper.mappedValues) {
+            const value = vWMapper.mappedValues[key](this.vRegister);
             this[`${key}`] = value;
         }
     }
 
-     /**
-     * Returns a VwRegister that matches the query made with the parameters. If no results found returns null
+    /**
+     * Returns a VWRegister that matches the query made with the parameters. If no results found returns null
      * @param {string} idRefTable 
      * @param {string} index 
      * @param {string[]} resolver 
-     * @returns {VwRegister} VwRegister
+     * @returns {VwRegister} VWRegister
      */
     static getRegister(idRefTable, index, resolver) {
 
-        if(!Array.isArray(resolver)) {
-            throw new Error('VwRegister.getRegister: the resolver parameter must be an Array of strings');
+        if (!Array.isArray(resolver)) {
+            throw new Error('VWRegister.getRegister: the resolver parameter must be an Array of strings');
         }
 
         const registerList = new VRegisterList(theRoot);
         registerList.setTable(idRefTable);
         registerList.load(index, resolver);
-        
-        if(registerList.size() > 1) {
-            throw new Error('VwRegister.getRegister: more than 1 result found. Check the query to use an unique index');
+
+        if (registerList.size() > 1) {
+            throw new Error('VWRegister.getRegister: more than 1 result found. Check the query to use an unique index');
         }
 
-        if(registerList.size() == 0) {
+        if (registerList.size() == 0) {
             return null;
         }
 
-        if(registerList.size() == 1) {
+        if (registerList.size() == 1) {
             const register = new VRegister(theRoot);
             register.copyFrom(registerList.readAt(0));
             const tableInfo = register.tableInfo();
@@ -66,31 +68,90 @@ export default class VwRegister extends VwTable {
     }
 
     /**
-     * Returns the VwRegister of a master
+     * Creates a register
+     * @param {string} tableIdRef table idRef
+     * @param {JSON} data Json with the register data. Keys must be fields IDs.
+     * @returns {VwRegister} VWRegister
+     */
+    static createRegister(tableIdRef, data) {
+        const vregister = new VRegister(theRoot);
+        vregister.setTable(tableIdRef);
+        const tableInfo = vregister.tableInfo();
+        const tableName = tableInfo.name();
+        for (let key in data) {
+            if (tableInfo.fieldName(key)) {
+                vregister.setField(key, data[key] || "");
+            } else {
+                throw new Error(`The field ${key} does not exist in the table ${tableName}`);
+            }
+        }
+        VWTransactions.transaction('Create register', () => {
+            vregister.addRegister();
+        });
+        const mapper = new VwMapper(tableInfo);
+        return new VwRegister(vregister, mapper);
+    }
+
+    /**
+     * @param {string} pluralId Id of the plural to load
+     * @return {Array VWRegister} Array of VWRegister
+     */
+    loadPlurals = (pluralId) => {
+        if (!pluralId) {
+            throw new Error(`LoadPlurals: pluralId not provided`);
+        }
+        const list = this.vRegister.loadPlurals(pluralId);
+        return VwList.parseArray(list);
+    }
+
+    /**
+     * 
+     * @param {JSON} data Json with the register data. Keys must be fields IDs.
+     * @returns {bolean} Success
+     */
+    modifyRegister(data) {
+        const tableInfo = this.vRegister.tableInfo();
+        const tableName = tableInfo.name();
+        let success = false;
+        VWTransactions.transaction('Modify register', () => {
+            for (let key in data) {
+                if (tableInfo.fieldName(key)) {
+                    this.vRegister.setField(key, data[key]);
+                } else {
+                    throw new Error(`The field ${key} does not exist in the table ${tableName}`);
+                }
+            }
+            success = this.vRegister.modifyRegister();
+        });
+        return success;
+    }
+
+    /**
+     * Returns the VWRegister of a master
      * @param {string} masterId the field master Id
-     * @param {int} masterType VwRegister.TYPE_CECO, VwRegister.TYPE_VREG
+     * @param {int} masterType VWRegister.TYPE_CECO, VWRegister.TYPE_VREG
      * @return {VwRegister}
      */
     getMaster = (masterId, masterType = VwRegister.TYPE_CECO, mapper) => {
-        if(typeof masterId !== 'string') {
-            throw new Error('VwRegister.getMaster -> first parameter must be a string');
+        if (typeof masterId !== 'string') {
+            throw new Error('VWRegister.getMaster -> first parameter must be a string');
         }
 
-        if(typeof masterType !== 'number') {
-            throw new Error('VwRegister.getMaster -> second parameter must be a number');
+        if (typeof masterType !== 'number') {
+            throw new Error('VWRegister.getMaster -> second parameter must be a number');
         }
 
-        if(mapper && !mapper instanceof VwMapper) {
-            throw new Error('VwRegister.getMaster -> third parameter must be an instance if VwMapper');
+        if (mapper && !mapper instanceof VwMapper) {
+            throw new Error('VWRegister.getMaster -> third parameter must be an instance if VWMapper');
         }
 
         const masterVregister = this.vRegister.readMaster(masterId);
-        if(masterType === VwRegister.TYPE_CECO) {
+        if (masterType === VwRegister.TYPE_CECO) {
             const masterTableInfo = masterVregister.tableInfo();
             const masterMapper = mapper ? mapper : new VwMapper(masterTableInfo);
-            const masterVwRegister = new VwRegister(masterVregister, masterMapper);
-            return masterVwRegister;
-        } else if(masterType === VwRegister.TYPE_VREG) {
+            const masterVWRegister = new VwRegister(masterVregister, masterMapper);
+            return masterVWRegister;
+        } else if (masterType === VwRegister.TYPE_VREG) {
             return masterVregister;
         }
     }
@@ -110,64 +171,106 @@ export default class VwRegister extends VwTable {
      */
     getValues = (arrMasterField = ['NAME'], arrFilter = [], format = VwRegister.GET_VALUES_OBJECT) => {
 
-        if(!Array.isArray(arrMasterField)) {
-            throw new Error(`VwRegister.getValues -> first parameter must be an array`);
+        if (!Array.isArray(arrMasterField)) {
+            throw new Error(`VWRegister.getValues -> first parameter must be an array`);
         }
 
-        if(!Array.isArray(arrFilter)) {
-            throw new Error(`VwRegister.getValues -> second parameter must be an array`);
+        if (!Array.isArray(arrFilter)) {
+            throw new Error(`VWRegister.getValues -> second parameter must be an array`);
         }
         let result;
-        if(format === VwRegister.GET_VALUES_OBJECT) {
+        if (format === VwRegister.GET_VALUES_OBJECT) {
             result = [];
         } else if (format === VwRegister.GET_VALUES_KEY_VALUE) {
             result = {};
         }
 
-        let fieldsInfo = this.vwFieldsIdName;
-        
-        if(arrFilter.length > 0) {
-            fieldsInfo = fieldsInfo.filter( field => {
+        let fieldsInfo = this.vWFieldsIdName;
+
+        if (arrFilter.length > 0) {
+            fieldsInfo = fieldsInfo.filter(field => {
                 return arrFilter.indexOf(field.id) !== -1;
             });
         }
         fieldsInfo.forEach(fieldInfo => {
             let value;
-            if(fieldInfo.bindType == 1) {
-                delete fieldInfo['bindType']
+            const tableInfo = this.vRegister.tableInfo();
+            const fieldNumber = tableInfo.findField(fieldInfo.id);
+            const type = tableInfo.fieldType(fieldNumber);
+            if (fieldInfo.bindType == 1) { // master field
+                delete fieldInfo['bindType'];
                 const master = this[fieldInfo.id]();
                 const BreakException = {};
                 try {
                     arrMasterField.forEach(fieldId => {
-                        try{
+                        try {
                             value = master[fieldId]();
                             throw BreakException;
-                        } catch(e) {
+                        } catch (e) {
                             // field does not exist in master
                         }
                     });
-                } catch(e) {
+                } catch (e) {
                     // break exception
                 }
-                if(!value) {
+                if (!value) {
                     value = this[fieldInfo.id]()['ID']();
                 }
             } else {
                 value = this[fieldInfo.id]();
             }
-            if(format === VwRegister.GET_VALUES_OBJECT) {
+            if (format === VwRegister.GET_VALUES_OBJECT) {
                 result.push({
                     ...fieldInfo,
+                    type,
                     value,
-                    table: this.tableName
                 });
-            } else if(format === VwRegister.GET_VALUES_KEY_VALUE) {
-                if(!!fieldInfo.name && fieldInfo.name.indexOf('___') === -1) {
+            } else if (format === VwRegister.GET_VALUES_KEY_VALUE) {
+                if (!!fieldInfo.name && fieldInfo.name.indexOf('___') === -1) {
                     result[fieldInfo.name] = value;
                 }
             }
         });
 
         return result;
+    }
+
+    deleteRegister = (cascade = false) => {
+        const registerId = this.vRegister.fieldToString('ID');
+        VWTransactions.transaction(`Delete ${this.tableName} register, id: ${registerId}`, () => {
+            if (cascade) {
+                this.deletePlurals();
+            }
+            this.vRegister.deleteRegister();
+        });
+    }
+
+    deletePlurals() {
+        const pluralsIdList = this.getPluralsArray();
+        pluralsIdList.forEach(pluralId => {
+            const plurals = this.loadPlurals(pluralId);
+            plurals.forEach(plural => {
+                plural.deleteRegister(true);
+            })
+        })
+    }
+
+    getPluralsArray() {
+        const tableInfo = this.vRegister.tableInfo();
+        const pluralCount = tableInfo.pluralCount();
+        const pluralList = [];
+
+        for (let i = 0; i < pluralCount; i++) {
+            pluralList.push(tableInfo.pluralId(i));
+        }
+
+        return pluralList;
+    }
+
+    static checkRegister(vRegister, tableIdRef) {
+        const tableInfo = vRegister.tableInfo();
+        if (tableInfo.idRef() != tableIdRef) {
+            throw new Error("Parameter is not a register of " + tableIdRef);
+        }
     }
 }

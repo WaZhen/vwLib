@@ -1,15 +1,15 @@
-import VwForm from "../VwForm/VwForm";
-const projectNames = ['velneo_verp_2_dat', 'velneo_verp_2_app', 'VwSat_app', 'VwRPV_app'];
+import VWForm from "../VWForm/VWForm";
+const projectNames = ['velneo_verp_2_dat', 'velneo_verp_2_app', 'VWSat_app', 'VWRPV_app'];
 /**
  * Class for manage velneo solutions
  */
 export default class VwProject {
     /**
-     * Creates an instance of VwProject
-     * @param {VProjectInfo} vwProjectInfo {@link https://doc.velneo.es/vprojectinfo.html|VProjectInfo}
+     * Creates an instance of VWProject
+     * @param {VProjectInfo} vWProjectInfo {@link https://doc.velneo.es/vprojectinfo.html|VProjectInfo}
      */
-    constructor(vwProjectInfo) {
-        this.projectInfo = vwProjectInfo;
+    constructor(vWProjectInfo) {
+        this.projectInfo = vWProjectInfo;
     }
 
     /**
@@ -28,8 +28,8 @@ export default class VwProject {
         const projects = [];
 
         VwProject.projectNames.forEach((projectName) => {
-            const vwProjectInfo = new VwProject(theApp.projectInfo(projectName));
-            projects.push(vwProjectInfo);
+            const vWProjectInfo = new VwProject(theApp.projectInfo(projectName));
+            projects.push(vWProjectInfo);
         });
 
         return projects;
@@ -57,28 +57,28 @@ export default class VwProject {
      */
     get tables() {
         // Returns an array of tableInfo
-        if(this.projectInfo.type() != 0) {
-            throw new Error('VwProject.getTables needs a dat type project as argument');
+        if (this.projectInfo.type() != 0) {
+            throw new Error('VWProject.getTables needs a dat type project as argument');
         }
 
         const tables = [];
         const numTables = this.tableCount();
-        
+
         for (let i = 0; i < numTables; i++) {
-            const vwTableInfo = this.tableInfo(i);
-            tables.push(vwTableInfo);
+            const vWTableInfo = this.tableInfo(i);
+            tables.push(vWTableInfo);
         }
 
         return tables;
     }
 
     /**
-     * @return {Array.<VwForm>}
+     * @return {Array.<VWForm>}
      */
     get forms() {
         // Return an array of vObjectInfo of forms
-        if(this.projectInfo.type() != 1) {
-            throw new Error('VwProject.forms needs a app type project as argument');
+        if (this.projectInfo.type() != 1) {
+            throw new Error('VWProject.forms needs a app type project as argument');
         }
 
         const forms = [];
@@ -86,7 +86,7 @@ export default class VwProject {
         const numObjects = this.projectInfo.objectCount(typeFormCode);
 
         for (let i = 0; i < numObjects; i++) {
-            const form = new VwForm(this.projectInfo.objectInfo(typeFormCode, i));
+            const form = new VWForm(this.projectInfo.objectInfo(typeFormCode, i));
             forms.push(form);
         }
         return forms;

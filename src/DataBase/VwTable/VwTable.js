@@ -1,4 +1,4 @@
-import VwTransactions from '../VwTransactions/VwTransactions';
+import VWTransactions from '../VWTransactions/VWTransactions';
 
 const indexTypesNames = ['Clave única', 'Palabras', 'Múltiples claves', 'Acepta repetidas', 'Trozos de palabras'];
 
@@ -10,84 +10,75 @@ export default class VwTable {
     /**
      * @type{String[]}
      */
-    static get indexTypesNames(){
+    static get indexTypesNames() {
         return indexTypesNames;
     }
 
-    /**
-     * Creates a register
-     * @param {string} idRefTable idRef of the table
-     * @param {Object} data Object: the key must be the field ID.
-     */
-    static createRegister(idRefTable, data) {
-        
-    }
-
     constructor(idRef) {
-        const vwProject = idRef.split("/")[0];
-        const vwTable = idRef.split("/")[1];
-        this.vwProject = theApp.projectInfo(vwProject);
-        this.infovwTable = this.vwProject.tableInfo(vwTable);
+        const vWProject = idRef.split("/")[0];
+        const vWTable = idRef.split("/")[1];
+        this.vWProject = theApp.projectInfo(vWProject);
+        this.infovWTable = this.vWProject.tableInfo(vWTable);
     };
 
     /**
      * @type {Array}
      */
-    get vwFields() {
-        const vwFields = [];
-        const numvwFields = this.infovwTable.fieldCount();
-        
-        for(let i = 0; i < numvwFields; i++) {
-            vwFields.push({
-                id: this.infovwTable.fieldId(i),
-                name: this.infovwTable.fieldName(i),
-                type: this.infovwTable.fieldType(i),
-                bindType: this.infovwTable.fieldBindType(i),
-                objectType: this.infovwTable.fieldObjectType(i)
+    get vWFields() {
+        const vWFields = [];
+        const numvWFields = this.infovWTable.fieldCount();
+
+        for (let i = 0; i < numvWFields; i++) {
+            vWFields.push({
+                id: this.infovWTable.fieldId(i),
+                name: this.infovWTable.fieldName(i),
+                type: this.infovWTable.fieldType(i),
+                bindType: this.infovWTable.fieldBindType(i),
+                objectType: this.infovWTable.fieldObjectType(i)
             });
         }
 
-        return vwFields;
+        return vWFields;
     };
 
-    get vwFieldsIdName() {
-        const vwFieldsId = [];
-        const numVwFields = this.infovwTable.fieldCount();
+    get vWFieldsIdName() {
+        const vWFieldsId = [];
+        const numVWFields = this.infovWTable.fieldCount();
 
-        for(let i = 0; i < numVwFields; i++) {
+        for (let i = 0; i < numVWFields; i++) {
             const object = {
-                id: this.infovwTable.fieldId(i),
-                name: this.infovwTable.fieldName(i)
+                id: this.infovWTable.fieldId(i),
+                name: this.infovWTable.fieldName(i)
             }
 
-            if(this.infovwTable.fieldBindType(i) == 1) {
+            if (this.infovWTable.fieldBindType(i) == 1) {
                 object = {
                     ...object,
                     bindType: 1
                 }
             }
-            vwFieldsId.push(object);
+            vWFieldsId.push(object);
         }
 
-        return vwFieldsId;
+        return vWFieldsId;
     }
 
     /**
      * @type{Array}
      */
-    get vwIdexes() {
-        const vwIdexes = [];
-        const numVwIdexes = this.infovwTable.indexCount();
+    get vWIdexes() {
+        const vWIdexes = [];
+        const numVWIdexes = this.infovWTable.indexCount();
 
-        for(let i = 0; i < numVwIdexes; i++) {
-            vwIdexes.push({
-                id: this.infovwTable.indexId(i),
-                nombre: this.infovwTable.indexName(i),
-                tipo: this.infovwTable.indexType(i),
-                nombreTipo: vwTable.indexTypesNames[this.infovwTable.indexType(i)] 
+        for (let i = 0; i < numVWIdexes; i++) {
+            vWIdexes.push({
+                id: this.infovWTable.indexId(i),
+                nombre: this.infovWTable.indexName(i),
+                tipo: this.infovWTable.indexType(i),
+                nombreTipo: indexTypesNames[this.infovWTable.indexType(i)]
             });
         }
 
-        return vwIdexes;
+        return vWIdexes;
     }
 }

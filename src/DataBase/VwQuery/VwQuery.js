@@ -8,21 +8,21 @@ export default class VwQuery {
      * @param {object} queryArguments JSON. The keys are the query object local variables. The values are setted in the variables
      * @returns {VRegisterList} velneoVRegisterList {@link https://doc.velneo.es/vregisterlist.html|VRegisterList}
      */
-    static query (queryIdRef, queryArguments) {
-        
-        if(typeof queryIdRef !== 'string') {
-            throw new Error('First parameter of VwQuery.query must be a string');
+    static query(queryIdRef, queryArguments) {
+
+        if (typeof queryIdRef !== 'string') {
+            throw new Error('First parameter of VWQuery.query must be a string');
         }
 
         importClass("VQuery");
         const query = new VQuery(theRoot);
         query.setQuery(queryIdRef);
-        
+
         for (key in queryArguments) {
             query.setVar(key, queryArguments[key]);
         }
 
-        if(query.exec()) {
+        if (query.exec()) {
             return query.result();
         } else {
             throw new Error('Vquery execution failed');

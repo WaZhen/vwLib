@@ -8,7 +8,7 @@ import VwMapper from '../VwMapper/VwMapper';
  * @param {idRef}
  */
 export default class VwList extends VwTable {
-    
+
     constructor(idRef) {
         super(idRef);
     }
@@ -16,48 +16,49 @@ export default class VwList extends VwTable {
     /**
      * 
      * @param {string} idRef Table idRef
-     * @param {string} vwIndex Index id 
-     * @param {string[]} vwParts Array with the parts of the index
+     * @param {string} vWIndex Index id 
+     * @param {string[]} vWParts Array with the parts of the index
      */
-    static search(idRef, vwIndex, vwParts) {
+    static search(idRef, vWIndex, vWParts) {
         // Devuelve un array de VRegister 
-        if(typeof idRef !== 'string') {
-            throw new Error('VwList.search first parameter must be a string');
+        if (typeof idRef !== 'string') {
+            throw new Error('VWList.search first parameter must be a string');
         }
-        if(typeof vwIndex !== 'string') {
-            throw new Error('VwList.search second parameter must be a string');
+        if (typeof vWIndex !== 'string') {
+            throw new Error('VWList.search second parameter must be a string');
         }
-        if(!Array.isArray(vwParts)) {
-            throw new Error('VwList.search. third parameter must bu an array');
+        if (!Array.isArray(vWParts)) {
+            throw new Error('VWList.search. third parameter must bu an array');
         }
 
-        const vwList = new VRegisterList(theRoot);
-        vwList.setTable(idRef);
-        vwList.load(vwIndex, vwParts);
-        const numResults = vwList.size();
+        const vWList = new VRegisterList(theRoot);
+        vWList.setTable(idRef);
+        vWList.load(vWIndex, vWParts);
+        const tableInfo = vWList.tableInfo()
+        const mapper = new VwMapper(tableInfo)
+        const numResults = vWList.size();
         const results = [];
 
-        for(let i = 0; i < numResults; i++) {
+        for (let i = 0; i < numResults; i++) {
             const result = new VRegister(theRoot);
-            result.copyFrom(vwList.readAt(i));
-            results.push(result);
+            result.copyFrom(vWList.readAt(i));
+            results.push(new VwRegister(result, mapper));
         }
 
         return results;
     }
 
     /**
-     * Returns an array of VwRegisters from a velneo VRegisterList
+     * Returns an array of VWRegisters from a velneo VRegisterList
      * @param {VRegisterList} Velneo VRegisterList
-     * @return {VwRegister[]} Array of VwRegisters
+     * @return {VwRegister[]} Array of VWRegisters
      */
     static parseArray = (velneoVRegisterList) => {
         const tableInfo = velneoVRegisterList.tableInfo();
         const mapper = new VwMapper(tableInfo);
         const numResults = velneoVRegisterList.size();
         const results = [];
-
-        for(let i = 0; i < numResults; i++) {
+        for (let i = 0; i < numResults; i++) {
             const result = new VRegister(theRoot);
             result.copyFrom(velneoVRegisterList.readAt(i));
             results.push(new VwRegister(result, mapper));

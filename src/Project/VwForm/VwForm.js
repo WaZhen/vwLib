@@ -1,15 +1,15 @@
-import VwObjectInfo from '../VwObjectInfo/VwObjectInfo';
+import VWObjectInfo from '../VWObjectInfo/VWObjectInfo';
 
 /** 
  * Class for maping form objects
- * @extends VwObjectInfo
- * @param {VwObjectInfo}
+ * @extends VWObjectInfo
+ * @param {VWObjectInfo}
  */
-export default class VwForm extends VwObjectInfo{
-    constructor(vwObjectInfo) {
-        super(vwObjectInfo);
-        if(vwObjectInfo.type() != 18) {
-            throw new Error('New VwForm needs a vObjectInfo of type form (18) as input');
+export default class VwForm extends VWObjectInfo {
+    constructor(vWObjectInfo) {
+        super(vWObjectInfo);
+        if (vWObjectInfo.type() != 18) {
+            throw new Error('New VWForm needs a vObjectInfo of type form (18) as input');
         }
     }
 }

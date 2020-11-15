@@ -3,16 +3,16 @@
  */
 export default class VwObjectInfo {
     /**
-     * @param {VObjectInfo} vwObjectInfo {@link https://doc.velneo.es/vobjectinfo.html|VObjectInfo}
+     * @param {VObjectInfo} vWObjectInfo {@link https://doc.velneo.es/vobjectinfo.html|VObjectInfo}
      */
-    constructor(vwObjectInfo) {
-        this.vwObjectInfo = vwObjectInfo;
+    constructor(vWObjectInfo) {
+        this.vWObjectInfo = vWObjectInfo;
         const typeControlCode = 19;
-        const numSubObjects = this.vwObjectInfo.subObjectCount(typeControlCode);
+        const numSubObjects = this.vWObjectInfo.subObjectCount(typeControlCode);
         this.subObjects = [];
-        
-        for(let i = 0; i < numSubObjects; i++) {
-            this.subObjects.push(this.vwObjectInfo.subObjectInfo(typeControlCode, i));
+
+        for (let i = 0; i < numSubObjects; i++) {
+            this.subObjects.push(this.vWObjectInfo.subObjectInfo(typeControlCode, i));
         }
     }
 
@@ -20,14 +20,14 @@ export default class VwObjectInfo {
      * @returns {string}
      */
     get id() {
-        return this.vwObjectInfo.id();
+        return this.vWObjectInfo.id();
     }
 
     /**
      * @returns {string}
      */
     get idRef() {
-        return this.vwObjectInfo.idRef();
+        return this.vWObjectInfo.idRef();
     }
 
     // Getters
@@ -38,13 +38,13 @@ export default class VwObjectInfo {
      */
     getSubOjects(type) {
         const subObjects = this.subObjects.filter(subObject => subObject.propertyData(0) == type);
-        const vwSubObjects = subObjects.map(subObject => new this.vwObjectInfo(subObject));
-        return vwSubObjects;
+        const vWSubObjects = subObjects.map(subObject => new this.vWObjectInfo(subObject));
+        return vWSubObjects;
     }
     /**
      * @type {VwObjectInfo}
      */
-    get pictures(){
+    get pictures() {
         return this.getSubOjects(0);
     }
     /**
@@ -54,56 +54,56 @@ export default class VwObjectInfo {
         return this.getSubOjects(2);
     }
 
-     /**
+    /**
      * @type {VwObjectInfo}
      */
     get fieldNames() {
         return this.getSubOjects(3);
     }
 
-     /**
+    /**
      * @type {VwObjectInfo}
      */
     get textEdits() {
         return this.getSubOjects(4);
     }
 
-     /**
+    /**
      * @type {VwObjectInfo}
      */
     get buttons() {
         return this.getSubObjects(5);
     }
 
-     /**
+    /**
      * @type {VwObjectInfo}
      */
     get radios() {
         return this.getSubOjects(6);
     }
 
-     /**
+    /**
      * @type {VwObjectInfo}
      */
     get checkButtons() {
         return this.getSubOjects(7);
     }
 
-     /**
+    /**
      * @type {VwObjectInfo}
      */
     get numericEdits() {
         return this.getSubOjects(8);
     }
 
-     /**
+    /**
      * @type {VwObjectInfo}
      */
     get dateEdits() {
         return this.getSubOjects(9);
     }
 
-     /**
+    /**
      * @type {VwObjectInfo}
      */
     get splitters() {
@@ -111,19 +111,14 @@ export default class VwObjectInfo {
     }
 
     /**
-    * @type {VwObjectInfo}
-    */   
+     * @type {VwObjectInfo}
+     */
     get comboBoxes() {
         return this.getSubOjects(14);
     }
 }
 
 /*
-
-
-From velneo docs:
-
-
 Dibujo = 0
 Caja de grupo = 1
 Texto estático = 2
