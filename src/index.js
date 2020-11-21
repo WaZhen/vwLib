@@ -23,6 +23,7 @@ import VwForm from './Project/VwForm/VwForm';
 import VwObjectInfo from './Project/VwObjectInfo/VwObjectInfo';
 import VwProject from './Project/VwProject/VwProject';
 
+import ExecuteProcessManager from './VwRegisterCreatorFromProcess/ExecuteProcessManager';
 import VwRegisterCreatorFromProcess from './VwRegisterCreatorFromProcess/VwRegisterCreatorFromProcess';
 
 export {
@@ -42,5 +43,6 @@ export {
     VwForm,
     VwObjectInfo,
     VwProject,
+    ExecuteProcessManager,
     VwRegisterCreatorFromProcess,
 }
