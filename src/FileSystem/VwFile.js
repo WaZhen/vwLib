@@ -1,4 +1,4 @@
-import generaLogError from '../../VWErp_dat/VWErrorLog/VWErrorLog'
+import generaLogError from '../Debug/VwErrorLog'
 /**
  * Class for manage files
  */

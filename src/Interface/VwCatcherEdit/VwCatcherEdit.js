@@ -1,4 +1,4 @@
-import VWRegister from '../../../Utils/DataBase/VWRegister/VWRegister';
+import VWRegister from '../../DataBase/VwRegister/VwRegister';
 import VWMapper from '../../DataBase/VWMapper/VWMapper';
 /**
  * Class for managing Catcher edits
