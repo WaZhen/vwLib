@@ -6,7 +6,6 @@ export default class RegisterCreatorFromProcess {
     constructor() {
         this.projects = [
             'velneo_verp_2_dat',
-            'vW_procesos',
             'velneo_verp_2_app',
         ];
         this.requiredKeys = [];
@@ -15,12 +14,14 @@ export default class RegisterCreatorFromProcess {
     runStart(keyword, tableIdRef) {
         this.projects.forEach(project => {
             const processesIds = this.getKeywordProcesses(project, keyword);
-            this.createProcessesRegisters(project, processesIds, tableIdRef);
-            this.removeRegisterNoProcess({
-                project,
-                processesIds,
-                tableIdRef
-            });
+            if (processesIds) {
+                this.createProcessesRegisters(project, processesIds, tableIdRef);
+                this.removeRegisterNoProcess({
+                    project,
+                    processesIds,
+                    tableIdRef
+                });
+            }
         });
     }
 
