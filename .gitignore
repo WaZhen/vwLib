@@ -62,3 +62,6 @@ typings/
 
 # production folder
 prod/
+
+# docs folder
+docs/
