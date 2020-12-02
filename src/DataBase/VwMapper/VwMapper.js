@@ -1,11 +1,12 @@
 import VwTable from "../VwTable/VwTable";
 import VwRegister from "../VwRegister/VwRegister";
 
+const CONST_MAP_TYPE_MAP = 0;
+const CONST_MAP_TYPE_ALL_STRING = 1;
+
 /**
  * @param {VTableInfo} VTableInfo {@link https://doc.velneo.es/vtableinfo.html|VTableInfo}
  */
-const CONST_MAP_TYPE_MAP = 0;
-const CONST_MAP_TYPE_ALL_STRING = 1;
 export default class VwMapper {
     /**
      * Property: Object that contains the functions that return the value of the mapped field

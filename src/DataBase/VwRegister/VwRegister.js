@@ -94,7 +94,7 @@ export default class VwRegister extends VwTable {
 
     /**
      * @param {string} pluralId Id of the plural to load
-     * @return {Array VWRegister} Array of VWRegister
+     * @returns {Array.VWRegister} Array of VWRegister
      */
     loadPlurals = (pluralId) => {
         if (!pluralId) {
