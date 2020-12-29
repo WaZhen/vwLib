@@ -273,4 +273,23 @@ export default class VwRegister extends VwTable {
             throw new Error("Parameter is not a register of " + tableIdRef);
         }
     }
+
+    getNotMastersFieldsJson(except=[]) {
+        returnJson = {};
+        const tableInfo = this.vRegister.tableInfo();
+        const fieldsNumber = tableInfo.fieldCount();
+        for(let i=0; i<=fieldsNumber; i++) {
+            try {
+                if(tableInfo.fieldBindType(i) == 0) {
+                    const fieldId = tableInfo.fieldId(i);
+                    if(except.indexOf(fieldId) == -1) {
+                        returnJson[fieldId] = this[fieldId]();
+                    }
+                }
+            } catch(e) {
+
+            }
+        }
+        return returnJson;
+    }
 }
