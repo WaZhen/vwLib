@@ -73,7 +73,7 @@ export default class VwRegister extends VwTable {
      * @param {JSON} data Json with the register data. Keys must be fields IDs.
      * @returns {VwRegister} VWRegister
      */
-    static createRegister(tableIdRef, data) {
+    static createRegister(tableIdRef, data, skipErrors=false) {
         const vregister = new VRegister(theRoot);
         vregister.setTable(tableIdRef);
         const tableInfo = vregister.tableInfo();
@@ -86,13 +86,19 @@ export default class VwRegister extends VwTable {
                     this.vRegister.setField(key, data[key] || "");
                 } catch(e) {
                     if(typeof data[currentKey] == "object") {
-                        throw new Error(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
+                        if(!skipErrors) {
+                            throw new Error(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
+                        }
                     } else {
-                        throw new Error(`setField error. key: ${currentKey}, value: ${data[currentKey]}`);
+                        if(!skipErrors) {
+                            throw new Error(`setField error. key: ${currentKey}, value: ${data[currentKey]}`);
+                        }
                     }
                 }
             } else {
-                throw new Error(`The field ${key} does not exist in the table ${tableName}`);
+                if(!skipErrors) {
+                    throw new Error(`The field ${key} does not exist in the table ${tableName}`);
+                }
             }
         }
         VWTransactions.transaction('Create register', () => {
@@ -119,7 +125,7 @@ export default class VwRegister extends VwTable {
      * @param {JSON} data Json with the register data. Keys must be fields IDs.
      * @returns {bolean} Success
      */
-    modifyRegister(data) {
+    modifyRegister(data, skipErrors=false) {
         const tableInfo = this.vRegister.tableInfo();
         const tableName = tableInfo.name();
         let success = false;
@@ -132,13 +138,19 @@ export default class VwRegister extends VwTable {
                         this.vRegister.setField(key, data[key]);
                     } catch(e) {
                         if(typeof data[currentKey] == "object") {
-                            throw new Error(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
+                            if(!skipErrors) {
+                                throw new Error(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
+                            }
                         } else {
-                            throw new Error(`setField error. key: ${currentKey}, value: ${data[currentKey]}`);
+                            if(!skipErrors) {
+                                throw new Error(`setField error. key: ${currentKey}, value: ${data[currentKey]}`);
+                            }
                         }
                     }
                 } else {
-                    throw new Error(`The field ${key} does not exist in the table ${tableName}`);
+                    if(!skipErrors) {
+                        throw new Error(`The field ${key} does not exist in the table ${tableName}`);
+                    }
                 }
             }
             success = this.vRegister.modifyRegister();
