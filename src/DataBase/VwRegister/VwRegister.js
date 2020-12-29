@@ -78,9 +78,19 @@ export default class VwRegister extends VwTable {
         vregister.setTable(tableIdRef);
         const tableInfo = vregister.tableInfo();
         const tableName = tableInfo.name();
+        let currentKey;
         for (let key in data) {
             if (tableInfo.fieldName(key)) {
-                vregister.setField(key, data[key] || "");
+                currentKey = key
+                try {
+                    this.vRegister.setField(key, data[key] || "");
+                } catch(e) {
+                    if(typeof data[currentKey] == "object") {
+                        throw new Error(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
+                    } else {
+                        throw new Error(`setField error. key: ${currentKey}, value: ${data[currentKey]}`);
+                    }
+                }
             } else {
                 throw new Error(`The field ${key} does not exist in the table ${tableName}`);
             }
@@ -113,10 +123,20 @@ export default class VwRegister extends VwTable {
         const tableInfo = this.vRegister.tableInfo();
         const tableName = tableInfo.name();
         let success = false;
+        let currentKey;
         VWTransactions.transaction('Modify register', () => {
             for (let key in data) {
                 if (tableInfo.fieldName(key)) {
-                    this.vRegister.setField(key, data[key]);
+                    currentKey = key
+                    try {
+                        this.vRegister.setField(key, data[key]);
+                    } catch(e) {
+                        if(typeof data[currentKey] == "object") {
+                            throw new Error(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
+                        } else {
+                            throw new Error(`setField error. key: ${currentKey}, value: ${data[currentKey]}`);
+                        }
+                    }
                 } else {
                     throw new Error(`The field ${key} does not exist in the table ${tableName}`);
                 }
