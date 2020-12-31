@@ -308,6 +308,11 @@ export default class VwRegister extends VwTable {
         }
     }
 
+    /**
+     * Returns a json with fields ID as keys an field values as values.
+     * Not include relationship fields
+     * @param {*} except Fields to exclude
+     */
     getNotMastersFieldsJson(except=[]) {
         returnJson = {};
         const tableInfo = this.vRegister.tableInfo();
@@ -325,5 +330,18 @@ export default class VwRegister extends VwTable {
             }
         }
         return returnJson;
+    }
+
+    /**
+     * Prints a list with the IDs of the fields
+     */
+    printFieldIdList() {
+        printString = "";
+        const tableInfo = this.vRegister.tableInfo();
+        const fieldsNumber = tableInfo.fieldCount();
+        for(let i=0; i<=fieldsNumber; i++) {
+            printString += tableInfo.fieldId(i) + "\n";
+        }
+        alert(printString);
     }
 }
