@@ -83,21 +83,23 @@ export default class VwRegister extends VwTable {
             if (tableInfo.fieldName(key)) {
                 currentKey = key
                 try {
-                    this.vRegister.setField(key, data[key] || "");
+                    vregister.setField(key, data[key]);
                 } catch(e) {
-                    if(typeof data[currentKey] == "object") {
-                        if(!skipErrors) {
-                            throw new Error(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
+                    if(!skipErrors) {
+                        if(typeof data[currentKey] == "object") {
+                                throw new Error(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
+                        } else {
+                                throw new Error(`setField error. key: ${currentKey}, value: ${data[currentKey]}`);
                         }
                     } else {
-                        if(!skipErrors) {
-                            throw new Error(`setField error. key: ${currentKey}, value: ${data[currentKey]}`);
-                        }
+                        alert(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
                     }
                 }
             } else {
                 if(!skipErrors) {
                     throw new Error(`The field ${key} does not exist in the table ${tableName}`);
+                } else {
+                    alert(`The field ${key} does not exist in the table ${tableName}`);
                 }
             }
         }
@@ -137,14 +139,14 @@ export default class VwRegister extends VwTable {
                     try {
                         this.vRegister.setField(key, data[key]);
                     } catch(e) {
-                        if(typeof data[currentKey] == "object") {
-                            if(!skipErrors) {
+                        if(!skipErrors) {
+                            if(typeof data[currentKey] == "object") {
                                 throw new Error(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
-                            }
-                        } else {
-                            if(!skipErrors) {
+                            } else {
                                 throw new Error(`setField error. key: ${currentKey}, value: ${data[currentKey]}`);
                             }
+                        } else {
+                            alert(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
                         }
                     }
                 } else {
