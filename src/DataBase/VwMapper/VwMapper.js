@@ -48,7 +48,15 @@ export default class VwMapper {
                         }
                     }
                 }
-            } else if (field.bindType == VTableInfo.BindTypeMaster) {
+            } else if (
+                field.bindType == VTableInfo.BindTypeMaster ||
+                field.bindType == VTableInfo.BindTypeIndirectReal ||
+                field.bindType == VTableInfo.BindTypeIndirectVirtual ||
+                field.bindType == VTableInfo.BindTypeSingularPluralPos ||
+                field.bindType == VTableInfo.BindTypeSingularPluralIndex ||
+                field.bindType == VTableInfo.BindTypeAdjacentSibling ||
+                field.bindType == VTableInfo.BindTypeMasterExt 
+            ) {
                 mappedValues[field.id] = (velneoVregister) => {
                     const fieldId = field.id;
                     return () => {
