@@ -26,6 +26,9 @@ import VwProject from './Project/VwProject/VwProject';
 import ExecuteProcessManager from './VwRegisterCreatorFromProcess/ExecuteProcessManager';
 import VwRegisterCreatorFromProcess from './VwRegisterCreatorFromProcess/VwRegisterCreatorFromProcess';
 
+import VwProcess from './VwProcess/VwProcess';
+
+
 export {
     AppConfiguration,
     CsvParser,
@@ -45,4 +48,5 @@ export {
     VwProject,
     ExecuteProcessManager,
     VwRegisterCreatorFromProcess,
+    VwProcess,
 }
