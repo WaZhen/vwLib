@@ -8,6 +8,7 @@ export default class VwProcess {
             throw new Error('Check process variables requires a variable list with at least 1 element');
         }
         const objectInfo = processObject.objectInfo();
+        const processIdRef = objectInfo.idRef()
         const typeVariable = 9
         const numVariables = objectInfo.subObjectCount(typeVariable);
         const variablesArray = [];
@@ -21,12 +22,12 @@ export default class VwProcess {
         let error = '';
         variableList.forEach((requiredVariable) => {
             if(variablesArray.indexOf(requiredVariable) == -1) {
-                error = error + `Process to execute: ${this.processIdRef} should have a variable with id ${requiredVariable}\n`
+                error = error + `Process to execute: ${processIdRef} should have a variable with id ${requiredVariable}\n`
             }
         });
 
         if(error.length > 0) {
-            this.processDefinitionError({error});
+            throw new Error(error)
         } else {
             return true;
         }
