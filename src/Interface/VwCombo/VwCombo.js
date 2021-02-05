@@ -30,4 +30,8 @@ export default class VwCombo {
             }
         });
     }
+
+    get currentData() {
+        return this.combo.itemData(this.combo.currentIndex);
+    }
 }
