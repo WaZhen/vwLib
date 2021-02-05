@@ -14,6 +14,7 @@ import VwErrorLog from './Debug/VwErrorLog';
 import VwFile from './FileSystem/VwFile';
 
 import VwCatcherEdit from './Interface/VwCatcherEdit/VwCatcherEdit';
+import VwCombo from './Interface/VwCombo/VwCombo';
 
 import VwRequest from './Networking/VwRequest';
 
@@ -43,6 +44,7 @@ export {
     VwErrorLog,
     VwFile,
     VwCatcherEdit,
+    VwCombo,
     VwRequest,
     VwObjects,
     VwForm,
