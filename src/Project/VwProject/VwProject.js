@@ -124,7 +124,15 @@ export default class VwProject {
         return projects;
     }
 
-    static getProjectObjects(project, objectType) {
+    static getProjectObjects(projectArg, objectType) {
+        let project;
+        if(typeof project == string) {
+            project = theApp.projectInfo(projectArg)
+        } else if (project instanceof VProjectInfo){
+            project = projectArg;
+        } else {
+            throw new Error("Invalid projectArg");
+        }
         var objectList = [];
         var objectCount = project.allObjectCount(objectType);
 
