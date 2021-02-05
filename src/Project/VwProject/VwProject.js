@@ -1,4 +1,5 @@
 import VWForm from "../VWForm/VWForm";
+import VwProjectUtils from "./VwProjectUtils";
 const projectNames = ['velneo_verp_2_dat', 'velneo_verp_2_app', 'VWSat_app', 'VWRPV_app'];
 /**
  * Class for manage velneo solutions
@@ -90,5 +91,48 @@ export default class VwProject {
             forms.push(form);
         }
         return forms;
+    }
+
+    static getInheritedProjectList(startingProject, projectType=undefined, foundProjects=[]) {
+        const projects = [];
+        const found = foundProjects;
+
+        if(projectType == undefined || projectType == startingProject.type()) {
+            if(!VwProjectUtils.checkExistingProject(found, startingProject)) {
+                projects.push(startingProject);
+                found.push(startingProject);
+            }
+        }
+
+        for (var i=0; i<startingProject.legacyProjectCount(); i++) {
+            var project = startingProject.legacyProjectInfo(i);
+            if(!projectType == undefined || projectType == project.type()) {
+                if(!VwProjectUtils.checkExistingProject(found, project)) {
+                    projects.push(project);
+                    found.push(project);
+                }
+
+                if(project.legacyProjectCount() > 0) {
+                    projects.push(...VwProject.getInheritedProjectList(project, projectType, found));
+                }
+            } else {
+                if(project.legacyProjectCount() > 0) {
+                    projects.push(...VwProject.getInheritedProjectList(project, projectType, found));
+                }
+            }
+        }
+        return projects;
+    }
+
+    static getProjectObjects(project, objectType) {
+        var objectList = [];
+        var objectCount = project.allObjectCount(objectType);
+
+        for(var i=0; i<objectCount; i++) {
+            var objectInfo = project.objectInfo(objectType, i)
+            objectList.push(objectInfo);
+        }
+
+        return objectList;
     }
 }
