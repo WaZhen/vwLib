@@ -28,6 +28,8 @@ import VwRegisterCreatorFromProcess from './VwRegisterCreatorFromProcess/VwRegis
 
 import VwProcess from './VwProcess/VwProcess';
 
+import VwProject from './VwProject/VwProject';
+
 
 export {
     AppConfiguration,
@@ -49,4 +51,5 @@ export {
     ExecuteProcessManager,
     VwRegisterCreatorFromProcess,
     VwProcess,
+    VwProject,
 }
