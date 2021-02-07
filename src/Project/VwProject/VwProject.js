@@ -126,9 +126,9 @@ export default class VwProject {
 
     static getProjectObjects(projectArg, objectType) {
         let project;
-        if(typeof project == string) {
+        if(typeof projectArg == "string") {
             project = theApp.projectInfo(projectArg)
-        } else if (project instanceof VProjectInfo){
+        } else if (projectArg instanceof VProjectInfo){
             project = projectArg;
         } else {
             throw new Error("Invalid projectArg");
