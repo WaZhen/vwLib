@@ -34,4 +34,12 @@ export default class VwCombo {
     get currentData() {
         return this.combo.itemData(this.combo.currentIndex);
     }
+
+    selectElement(index) {
+        this.combo.setCurrentIndex(index);
+    }
+
+    clear() {
+        this.combo.clear();
+    }
 }
