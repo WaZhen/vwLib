@@ -32,4 +32,21 @@ export default class VwProcess {
             return true;
         }
     }
+
+    static call(processIdRef, variableList, executeLayer=VProcess.RunInServer) {
+        importClass("VProcess");
+        const process = new VProcess(theRoot);
+        process.setProcess(processIdRef);
+
+        for(key in variableList) {
+            const value = variableList[key];
+            process.setVar(key, value);
+        }
+
+        if(process.exec()) {
+            return process.result();
+        } else {
+            throw new Error("Process call execution error");
+        }
+    }
 }
