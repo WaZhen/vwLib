@@ -1,3 +1,4 @@
+importClass("VProcess");
 export default class VwProcess {
     static checkProcessVariables(processObject, variableList=[]) {
         if(!Array.isArray(variableList)) {
@@ -34,7 +35,6 @@ export default class VwProcess {
     }
 
     static call(processIdRef, variableList, executeLayer=VProcess.RunInServer) {
-        importClass("VProcess");
         const process = new VProcess(theRoot);
         process.setProcess(processIdRef);
 
