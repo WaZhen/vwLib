@@ -43,7 +43,7 @@ export default class VwProcess {
             process.setVar(key, value);
         }
 
-        if(process.exec()) {
+        if(process.exec(executeLayer)) {
             return process.result();
         } else {
             throw new Error("Process call execution error");
