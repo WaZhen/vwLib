@@ -39,6 +39,11 @@ export default class VwCombo {
         this.combo.setCurrentIndex(index);
     }
 
+    selectElementByValue(value) {
+        const index = this.combo.findData(value);
+        this.combo.setCurrentIndex(index);
+    }
+
     clear() {
         this.combo.clear();
     }
