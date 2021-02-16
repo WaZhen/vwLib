@@ -1,5 +1,10 @@
 importClass("VProcess");
 export default class VwProcess {
+    static get P1() {return VProcess.RunInThisThread;}
+    static get P2() {return VProcess.RunInNewThread;}
+    static get P3() {return VProcess.RunInServer;}
+    static get P4() {return VProcess.RunInServerAsync;}
+
     static checkProcessVariables(processObject, variableList=[]) {
         if(!Array.isArray(variableList)) {
             throw new Error('variableList must be an array');
@@ -34,7 +39,7 @@ export default class VwProcess {
         }
     }
 
-    static call(processIdRef, variableList, executeLayer=VProcess.RunInServer) {
+    static call(processIdRef, variableList, executeLayer=this.P3) {
         const process = new VProcess(theRoot);
         process.setProcess(processIdRef);
 
