@@ -2,7 +2,7 @@ export default class VwTableInfo {
     constructor(vRegisterOrTableInfo) {
         if(vRegisterOrTableInfo instanceof VRegister) {
             this.tableInfo = vRegister.tableInfo();
-        } else if(vRegisterOrTableInfo instanceof VTableInfo) {
+        } else if(typeof vRegisterOrTableInfo.comments === 'function') {
             this.tableInfo = vRegisterOrTableInfo;
         } else {
             throw new Error(`Parameter is not an VRegister or VTableInfo`);
@@ -18,6 +18,11 @@ export default class VwTableInfo {
                 return i;
             }
         }
+    }
+
+    getFieldBoundedType(fieldId) {
+        const index = this.getFieldIndexById(fieldId);
+        return this.tableInfo.fieldBindType(index);
     }
 
     getBoundedTableInfo(masterId) {

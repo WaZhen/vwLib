@@ -79,28 +79,47 @@ export default class VwRegister extends VwTable {
         vregister.setTable(tableIdRef);
         const tableInfo = vregister.tableInfo();
         const tableName = tableInfo.name();
+        let saved = false;
         let currentKey;
         for (let key in data) {
             if (tableInfo.fieldName(key)) {
                 currentKey = key
                 const value = data[key];
-                try {
-                    if(typeof value == "object") {
+                if(typeof value == "object") {
+                    try {
                         const info = new VwTableInfo(tableInfo);
                         const bountdedTableInfo = info.getBoundedTableInfo(key);
-                        VwRegister.createRegister(bountdedTableInfo.idRef(), value);
-                    } else {
-                        vregister.setField(key, value);
-                    }
-                } catch(e) {
-                    if(!skipErrors) {
-                        if(typeof data[currentKey] == "object") {
-                                throw new Error(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
-                        } else {
-                                throw new Error(`setField error. key: ${currentKey}, value: ${data[currentKey]}`);
+                        if(info.getFieldBoundedType(key) == VTableInfo.BindTypeMasterExt) {
+                            VWTransactions.transaction('Create register', () => {
+                                vregister.addRegister();
+                            });
+                            saved = true;
+                            value["ID"] = vregister.fieldToString("ID");
                         }
-                    } else {
-                        alert(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
+                        const master = VwRegister.createRegister(bountdedTableInfo.idRef(), value);
+                        if(info.getFieldBoundedType(key) != VTableInfo.BindTypeMasterExt) {
+                            vregister.setField(key, master.ID());
+                        }
+                    } catch(e) {
+                        if(!skipErrors) {
+                            throw new Error(e.message);
+                        } else {
+                            alert(e.message);
+                        }
+                    }
+                } else {
+                    try {
+                        vregister.setField(key, value);
+                    } catch(e) {
+                        if(!skipErrors) {
+                            if(typeof data[currentKey] == "object") {
+                                    throw new Error(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
+                            } else {
+                                    throw new Error(`setField error. key: ${currentKey}, value: ${data[currentKey]}`);
+                            }
+                        } else {
+                            alert(`setField error. key: ${currentKey}, value: ${JSON.stringify(data[currentKey])}`);
+                        }
                     }
                 }
             } else {
@@ -111,9 +130,15 @@ export default class VwRegister extends VwTable {
                 }
             }
         }
-        VWTransactions.transaction('Create register', () => {
-            vregister.addRegister();
-        });
+        if(!saved) {
+            VWTransactions.transaction('Create register', () => {
+                vregister.addRegister();
+            });
+        } else {
+            VWTransactions.transaction('Save register', () => {
+                vregister.modifyRegister();
+            });
+        }
         const mapper = new VwMapper(tableInfo);
         return new VwRegister(vregister, mapper);
     }
