@@ -8,6 +8,7 @@ import VwQuery from './DataBase/VwQuery/VwQuery';
 import VwRegister from './DataBase/VwRegister/VwRegister';
 import VwTable from './DataBase/VwTable/VwTable';
 import VwTransactions from './DataBase/VwTransactions/VwTransactions';
+import VwTableInfo from './DataBase/VwTableInfo/VwTableInfo'
 
 import VwErrorLog from './Debug/VwErrorLog';
 
@@ -38,6 +39,7 @@ export {
     VwRegister,
     VwTable,
     VwTransactions,
+    VwTableInfo,
     VwErrorLog,
     VwFile,
     VwCatcherEdit,
