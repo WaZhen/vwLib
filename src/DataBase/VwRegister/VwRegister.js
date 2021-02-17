@@ -2,6 +2,7 @@ import VwTable from '../VwTable/VwTable';
 import VwMapper from '../VwMapper/VwMapper';
 import VwList from '../VwList/VwList';
 import VWTransactions from '../VWTransactions/VWTransactions';
+import VwTableInfo from '../VwTableInfo/VwTableInfo';
 
 /**
  * Class for register operations
@@ -82,8 +83,15 @@ export default class VwRegister extends VwTable {
         for (let key in data) {
             if (tableInfo.fieldName(key)) {
                 currentKey = key
+                const value = data[key];
                 try {
-                    vregister.setField(key, data[key]);
+                    if(typeof value == "object") {
+                        const info = new VwTableInfo(tableInfo);
+                        const bountdedTableInfo = info.getBoundedTableInfo(key);
+                        VwRegister.createRegister(bountdedTableInfo.idRef(), value);
+                    } else {
+                        vregister.setField(key, value);
+                    }
                 } catch(e) {
                     if(!skipErrors) {
                         if(typeof data[currentKey] == "object") {
