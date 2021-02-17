@@ -31,4 +31,16 @@ export default class VwTableInfo {
             return new VwTableInfo(info);
         }
     }
+
+    idRef() {
+        return this.tableInfo.idRef();
+    }
+
+    id() {
+        return this.tableInfo.id();
+    }
+
+    name() {
+        return this.tableInfo.name();
+    }
 }
