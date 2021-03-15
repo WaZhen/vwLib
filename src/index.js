@@ -16,6 +16,7 @@ import VwFile from './FileSystem/VwFile';
 
 import VwCatcherEdit from './Interface/VwCatcherEdit/VwCatcherEdit';
 import VwCombo from './Interface/VwCombo/VwCombo';
+import VwMdiView from './Interface/VwMdiView/VwMdiView';
 
 import VwRequest from './Networking/VwRequest';
 
@@ -44,6 +45,7 @@ export {
     VwFile,
     VwCatcherEdit,
     VwCombo,
+    VwMdiView,
     VwRequest,
     VwObjects,
     VwForm,
