@@ -29,6 +29,7 @@ import ExecuteProcessManager from './VwRegisterCreatorFromProcess/ExecuteProcess
 import VwRegisterCreatorFromProcess from './VwRegisterCreatorFromProcess/VwRegisterCreatorFromProcess';
 
 import VwProcess from './VwProcess/VwProcess';
+import VwTreeWidget from './VwTreeWidget/VwTreeWidget';
 
 export {
     AppConfiguration,
@@ -52,4 +53,5 @@ export {
     ExecuteProcessManager,
     VwRegisterCreatorFromProcess,
     VwProcess,
+    VwTreeWidget,
 }
