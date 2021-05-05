@@ -10,6 +10,10 @@ export default class VwTreeWidget {
         this.validateOptions(options);
         this._generateHeader(options);
         this._generateRows(options);
+        for(let i = 0; i < this.treeWidget.columnCount; i++) {
+            this.treeWidget.resizeColumnToContents(i)
+        }
+        this.treeWidget.expandAll();
     }
 
     validateOptions(options){
@@ -24,7 +28,7 @@ export default class VwTreeWidget {
     _generateHeader(options) {
         const headerOptions = options.header;
         headerOptions.columns.forEach((column, i) => {
-            this.treeWidget.setHeaderLabel(column.name)
+            this.treeWidget.setHeaderLabel(i, column.name)
             if(!column.visible) {
                 this.treeWidget.hideColumn(i);
             }
@@ -58,17 +62,26 @@ export default class VwTreeWidget {
     }
 
     _configureTreeItem(treeItem, rowData) {
-        importClass("VImage");
-        const image = new VImage();
-        image.loadResource(rowData.icon);
-        treeItem.setIcon(this.iconColumn, image);
+        if(rowData.icon) {
+            importClass("VImage");
+            if(typeof rowData.icon == "string") {
+                const image = new VImage();
+                image.loadResource(rowData.icon);
+                treeItem.setIcon(this.iconColumn, image);
+            } else if(typeof rowData.icon == "object"){
+                treeItem.setIcon(this.iconColumn, rowData.icon);
+            }
+        }
         rowData.columns.forEach((column, i) => {
-            treeItem.setText(i, column)
+            treeItem.setText(i, column);
         });
         if(Array.isArray(rowData.children)) {
             rowData.children.forEach((childRowData) => {
                 this._createRow(childRowData, treeItem);
             })
+        }
+        if(rowData.default) {
+            this.treeWidget.setCurrentItem(treeItem, 0);
         }
     }
 
@@ -87,7 +100,11 @@ export default class VwTreeWidget {
                         type: 'array',
                         items: {type: 'string'}
                     },
-                    icon: {type: 'string'},
+                    icon: {type: ['string', 'object', 'null']},
+                    default: {
+                        type: 'bolean',
+                        optional: true,
+                    },
                     children: {
                         ...this,
                         optional: true

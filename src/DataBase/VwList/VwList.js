@@ -19,7 +19,7 @@ export default class VwList extends VwTable {
      * @param {string} vWIndex Index id 
      * @param {string[]} vWParts Array with the parts of the index
      */
-    static search(idRef, vWIndex, vWParts) {
+    static search(idRef, vWIndex, vWParts, sort=[]) {
         // Devuelve un array de VRegister 
         if (typeof idRef !== 'string') {
             throw new Error('VWList.search first parameter must be a string');
@@ -34,6 +34,9 @@ export default class VwList extends VwTable {
         const vWList = new VRegisterList(theRoot);
         vWList.setTable(idRef);
         vWList.load(vWIndex, vWParts);
+        if(sort.length > 0) {
+            vWList.sort(sort);
+        }
         const tableInfo = vWList.tableInfo()
         const mapper = new VwMapper(tableInfo)
         const numResults = vWList.size();
