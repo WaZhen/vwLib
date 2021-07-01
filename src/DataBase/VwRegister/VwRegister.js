@@ -377,4 +377,12 @@ export default class VwRegister extends VwTable {
         }
         alert(printString);
     }
+
+    get pluralTableName() {
+        this.vRegister.tableInfo().name();
+    }
+
+    get singleTableName() {
+        this.vRegister.tableInfo().singleName();
+    }
 }
