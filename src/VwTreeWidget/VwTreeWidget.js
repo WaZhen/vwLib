@@ -105,6 +105,10 @@ export default class VwTreeWidget {
                         type: 'bolean',
                         optional: true,
                     },
+                    code: {
+                        type: 'number',
+                        optional: true,
+                    },
                     children: {
                         ...this,
                         optional: true
