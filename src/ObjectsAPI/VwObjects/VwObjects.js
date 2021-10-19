@@ -22,8 +22,8 @@ export default class VwObjects {
         return tableInfo;
     }
 
-    static getProcessObjectInfo(projectName, processId) {
-        const proyectInfo = theApp.projectInfo(projectName);
+    static getProcessObjectInfo(projectAlias, processId) {
+        const proyectInfo = theApp.projectInfo(projectAlias);
         const processInfo = proyectInfo.objectInfo(VObjectInfo.TypeProcess, processId);
         return processInfo
     }
