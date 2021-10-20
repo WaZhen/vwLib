@@ -39,7 +39,7 @@ export default class VwProcess {
         }
     }
 
-    static call(processIdRef, variableList, executeLayer=this.P3) {
+    static call(processIdRef, variableList={}, executeLayer=this.P3) {
         const process = new VProcess(theRoot);
         process.setProcess(processIdRef);
 
