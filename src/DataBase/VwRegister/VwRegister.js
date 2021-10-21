@@ -85,7 +85,7 @@ export default class VwRegister extends VwTable {
             if (tableInfo.fieldName(key)) {
                 currentKey = key
                 const value = data[key];
-                if(typeof value == "object") {
+                if(typeof value == "object" && !(value instanceof Date)) {
                     try {
                         const info = new VwTableInfo(tableInfo);
                         const bountdedTableInfo = info.getBoundedTableInfo(key);
