@@ -13,6 +13,9 @@ export default class VwTreeWidget {
         for(let i = 0; i < this.treeWidget.columnCount; i++) {
             this.treeWidget.resizeColumnToContents(i)
         }
+        if(options.header.sortColumn) {
+            this.treeWidget.sortItems(options.header.sortColumn, 0);
+        }
         this.treeWidget.expandAll();
     }
 
@@ -98,7 +101,7 @@ export default class VwTreeWidget {
                 properties: {
                     columns: {
                         type: 'array',
-                        items: {type: 'string'}
+                        items: {type: ['string', 'number']}
                     },
                     icon: {type: ['string', 'object', 'null']},
                     default: {
@@ -142,7 +145,11 @@ export default class VwTreeWidget {
                         iconColumn: {
                             type: 'integer'
                         },
-                        visible: {type: 'boolean'}
+                        sortColumn: {
+                            type: 'number',
+                            optional: true,
+                        },
+                        visible: {type: 'boolean'},
                     },
                 },
                 rows: rowSchema,
