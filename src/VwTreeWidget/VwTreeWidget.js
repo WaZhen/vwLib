@@ -8,6 +8,7 @@ export default class VwTreeWidget {
 
     populate(options) {
         this.validateOptions(options);
+        this.treeWidget.clear();
         this._generateHeader(options);
         this._generateRows(options);
         for(let i = 0; i < this.treeWidget.columnCount; i++) {
