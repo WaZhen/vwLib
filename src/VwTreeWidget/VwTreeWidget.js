@@ -77,6 +77,7 @@ export default class VwTreeWidget {
         }
         rowData.columns.forEach((column, i) => {
             treeItem.setText(i, column);
+            treeItem.setToolTip(i, column);
         });
         if(Array.isArray(rowData.children)) {
             rowData.children.forEach((childRowData) => {
