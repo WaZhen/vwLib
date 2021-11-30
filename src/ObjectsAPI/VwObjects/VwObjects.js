@@ -4,14 +4,13 @@
 export default class VwObjects {
     static getProcessArray = (projectAlias) => {
         const projectInfo = theApp.projectInfo(projectAlias)
-        const processQuantity = projectInfo.objectCount(VObjectInfo.TypeProcess)
+        const processQuantity = projectInfo.objectCount(VObjectInfo.TypeProcess);
         const processArray = [];
 
         for (let i = 0; i < processQuantity; i++) {
             const processInfo = projectInfo.objectInfo(VObjectInfo.TypeProcess, i);
             processArray.push(processInfo.idRef());
         }
-
         return processArray;
     }
 
@@ -22,9 +21,16 @@ export default class VwObjects {
         return tableInfo;
     }
 
-    static getProcessObjectInfo(projectName, processId) {
-        const proyectInfo = theApp.projectInfo(projectName);
+    static getProcessObjectInfo(projectAlias, processId) {
+        const proyectInfo = theApp.projectInfo(projectAlias);
         const processInfo = proyectInfo.objectInfo(VObjectInfo.TypeProcess, processId);
         return processInfo
+    }
+
+    static getProcessObjectInfoArray(projectAlias) {
+        const processIdRefArray = VwObjects.getProcessArray(projectAlias);
+        return processIdRefArray.map((processIdRef) => {
+            return VwObjects.getProcessObjectInfo(projectAlias, processIdRef.split('/')[1]);
+        })
     }
 }

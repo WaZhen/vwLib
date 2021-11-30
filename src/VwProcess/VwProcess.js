@@ -39,7 +39,7 @@ export default class VwProcess {
         }
     }
 
-    static call(processIdRef, variableList, executeLayer=this.P3) {
+    static call(processIdRef, variableList={}, executeLayer=this.P3) {
         const process = new VProcess(theRoot);
         process.setProcess(processIdRef);
 
@@ -49,7 +49,7 @@ export default class VwProcess {
         }
 
         if(process.exec(executeLayer)) {
-            return process.result();
+            return process;
         } else {
             throw new Error("Process call execution error");
         }
