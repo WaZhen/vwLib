@@ -1,6 +1,5 @@
 import VwForm from "../VwForm/VwForm";
 import VwProjectUtils from "./VwProjectUtils";
-const projectNames = ['velneo_verp_2_dat', 'velneo_verp_2_app', 'VwSat_app', 'VwRPV_app'];
 /**
  * Class for manage velneo solutions
  */
@@ -9,49 +8,42 @@ export default class VwProject {
      * Creates an instance of VwProject
      * @param {VProjectInfo} vWProjectInfo {@link https://doc.velneo.es/vprojectinfo.html|VProjectInfo}
      */
-    constructor(vWProjectInfo) {
-        this.projectInfo = vWProjectInfo;
+    constructor(projectInfo=undefined) {
+        if(projectInfo) {
+            this.projectInfo = projectInfo;
+        } else {
+            this.projectInfo = theApp.mainProjectInfo();
+        }
     }
 
-    /**
-     * Returns the names of the projects
-     * @type {string[]}
-     */
-    static get projectNames() {
-        return projectNames
+    get name() {
+        return this.projectInfo.name();
     }
 
-    /**
-     * @type {Array.<VwProject>}
-     */
-    static get projects() {
-        // Returns an array of projects
-        const projects = [];
+    get type() {
+        return this.projectInfo.type();
+    }
 
-        VwProject.projectNames.forEach((projectName) => {
-            const vWProjectInfo = new VwProject(theApp.projectInfo(projectName));
-            projects.push(vWProjectInfo);
-        });
-
-        return projects;
+    get alias() {
+        return this.projectInfo.alias();
     }
 
     /**
      * @type {Array.<VwProject>}
      */
-    static get appProjects() {
+    getInheritedAppProjects() {
         // Returns an array of app projects
-        const projects = VwProject.projects.filter(project => project.projectInfo.type() == 1);
-
-        return projects;
+        return VwProject.getInheritedProjectList(this.projectInfo, 1);
     }
+
     /**
      * @type {Array.<VwProject>}
      */
-    static get datProjects() {
+    getInheritedDatProjects() {
         // Returns an array of dat projects
-        const projects = VwProject.projects.filter(project => project.projectInfo.type() == 0);
+        return VwProject.getInheritedProjectList(this.projectInfo, 0)
     }
+
     /**
      * Array de object infos
      * @type {Array}
@@ -124,15 +116,7 @@ export default class VwProject {
         return projects;
     }
 
-    static getProjectObjects(projectArg, objectType) {
-        let project;
-        if(typeof projectArg == "string") {
-            project = theApp.projectInfo(projectArg)
-        } else if (projectArg instanceof VProjectInfo){
-            project = projectArg;
-        } else {
-            throw new Error("Invalid projectArg");
-        }
+    getProjectObjects(project, objectType) {
         var objectList = [];
         var objectCount = project.allObjectCount(objectType);
 
