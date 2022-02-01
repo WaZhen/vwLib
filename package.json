@@ -27,6 +27,6 @@
   },
   "dependencies": {
     "comma-separated-values": "^3.6.4",
-    "schema-inspector": "^1.7.0"
+    "schema-inspector": "^2.0.0"
   }
 }
