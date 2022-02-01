@@ -1,5 +1,5 @@
-import VWRegister from '../../DataBase/VwRegister/VwRegister';
-import VWMapper from '../../DataBase/VWMapper/VWMapper';
+import VwRegister from '../../DataBase/VwRegister/VwRegister';
+import VwMapper from '../../DataBase/VwMapper/VwMapper';
 /**
  * Class for managing Catcher edits
  */
@@ -19,7 +19,7 @@ export default class VwCatcherEdit {
         const formulario = theRoot.dataView();
         const catcherEdit = formulario.control(idCatcherEdit);
         catcherEdit.setRegisterList(registerList);
-        const selectedRegister = VWRegister.getRegister(registerTable, registerIndex, resolvers);
+        const selectedRegister = VwRegister.getRegister(registerTable, registerIndex, resolvers);
         if (selectedRegister) {
             catcherEdit.setRegister(selectedRegister.vRegister);
         } else {
@@ -35,7 +35,7 @@ export default class VwCatcherEdit {
     static getRegister(catcherEditId) {
 
         if (typeof catcherEditId !== 'string') {
-            throw new Error('First parameter of VWCatcherEdit.getRegister must be a string');
+            throw new Error('First parameter of VwCatcherEdit.getRegister must be a string');
         }
 
         const form = theRoot.dataView();
@@ -43,8 +43,8 @@ export default class VwCatcherEdit {
         const register = new VRegister(theRoot);
         catcherEdit.getRegister(register);
         const tableInfo = register.tableInfo();
-        const mapper = new VWMapper(tableInfo);
-        const vWRegister = new VWRegister(register, mapper);
+        const mapper = new VwMapper(tableInfo);
+        const vWRegister = new VwRegister(register, mapper);
         return vWRegister;
     }
 }

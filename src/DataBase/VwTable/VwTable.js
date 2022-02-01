@@ -1,4 +1,4 @@
-import VWTransactions from '../VWTransactions/VWTransactions';
+import VwTransactions from '../VwTransactions/VwTransactions';
 
 const indexTypesNames = ['Clave única', 'Palabras', 'Múltiples claves', 'Acepta repetidas', 'Trozos de palabras'];
 
@@ -43,9 +43,9 @@ export default class VwTable {
 
     get vWFieldsIdName() {
         const vWFieldsId = [];
-        const numVWFields = this.infovWTable.fieldCount();
+        const numVwFields = this.infovWTable.fieldCount();
 
-        for (let i = 0; i < numVWFields; i++) {
+        for (let i = 0; i < numVwFields; i++) {
             const object = {
                 id: this.infovWTable.fieldId(i),
                 name: this.infovWTable.fieldName(i)
@@ -68,9 +68,9 @@ export default class VwTable {
      */
     get vWIdexes() {
         const vWIdexes = [];
-        const numVWIdexes = this.infovWTable.indexCount();
+        const numVwIdexes = this.infovWTable.indexCount();
 
-        for (let i = 0; i < numVWIdexes; i++) {
+        for (let i = 0; i < numVwIdexes; i++) {
             vWIdexes.push({
                 id: this.infovWTable.indexId(i),
                 nombre: this.infovWTable.indexName(i),

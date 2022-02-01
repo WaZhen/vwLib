@@ -22,13 +22,13 @@ export default class VwList extends VwTable {
     static search(idRef, vWIndex, vWParts, sort=[]) {
         // Devuelve un array de VRegister 
         if (typeof idRef !== 'string') {
-            throw new Error('VWList.search first parameter must be a string');
+            throw new Error('VwList.search first parameter must be a string');
         }
         if (typeof vWIndex !== 'string') {
-            throw new Error('VWList.search second parameter must be a string');
+            throw new Error('VwList.search second parameter must be a string');
         }
         if (!Array.isArray(vWParts)) {
-            throw new Error('VWList.search. third parameter must bu an array');
+            throw new Error('VwList.search. third parameter must bu an array');
         }
 
         const vWList = new VRegisterList(theRoot);
@@ -52,9 +52,9 @@ export default class VwList extends VwTable {
     }
 
     /**
-     * Returns an array of VWRegisters from a velneo VRegisterList
+     * Returns an array of VwRegisters from a velneo VRegisterList
      * @param {VRegisterList} Velneo VRegisterList
-     * @return {VwRegister[]} Array of VWRegisters
+     * @return {VwRegister[]} Array of VwRegisters
      */
     static parseArray = (velneoVRegisterList) => {
         const tableInfo = velneoVRegisterList.tableInfo();

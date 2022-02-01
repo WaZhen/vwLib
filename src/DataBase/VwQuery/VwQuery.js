@@ -11,7 +11,7 @@ export default class VwQuery {
     static query(queryIdRef, queryArguments) {
 
         if (typeof queryIdRef !== 'string') {
-            throw new Error('First parameter of VWQuery.query must be a string');
+            throw new Error('First parameter of VwQuery.query must be a string');
         }
 
         importClass("VQuery");

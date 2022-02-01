@@ -1,7 +1,7 @@
 import VwTable from '../VwTable/VwTable';
 import VwMapper from '../VwMapper/VwMapper';
 import VwList from '../VwList/VwList';
-import VWTransactions from '../VWTransactions/VWTransactions';
+import VwTransactions from '../VwTransactions/VwTransactions';
 import VwTableInfo from '../VwTableInfo/VwTableInfo';
 
 /**
@@ -35,16 +35,16 @@ export default class VwRegister extends VwTable {
     }
 
     /**
-     * Returns a VWRegister that matches the query made with the parameters. If no results found returns null
+     * Returns a VwRegister that matches the query made with the parameters. If no results found returns null
      * @param {string} idRefTable 
      * @param {string} index 
      * @param {string[]} resolver 
-     * @returns {VwRegister} VWRegister
+     * @returns {VwRegister} VwRegister
      */
     static getRegister(idRefTable, index, resolver) {
 
         if (!Array.isArray(resolver)) {
-            throw new Error('VWRegister.getRegister: the resolver parameter must be an Array of strings');
+            throw new Error('VwRegister.getRegister: the resolver parameter must be an Array of strings');
         }
 
         const registerList = new VRegisterList(theRoot);
@@ -52,7 +52,7 @@ export default class VwRegister extends VwTable {
         registerList.load(index, resolver);
 
         if (registerList.size() > 1) {
-            throw new Error('VWRegister.getRegister: more than 1 result found. Check the query to use an unique index');
+            throw new Error('VwRegister.getRegister: more than 1 result found. Check the query to use an unique index');
         }
 
         if (registerList.size() == 0) {
@@ -72,7 +72,7 @@ export default class VwRegister extends VwTable {
      * Creates a register
      * @param {string} tableIdRef table idRef
      * @param {JSON} data Json with the register data. Keys must be fields IDs.
-     * @returns {VwRegister} VWRegister
+     * @returns {VwRegister} VwRegister
      */
     static createRegister(tableIdRef, data, skipErrors=false) {
         const vregister = new VRegister(theRoot);
@@ -90,7 +90,7 @@ export default class VwRegister extends VwTable {
                         const info = new VwTableInfo(tableInfo);
                         const bountdedTableInfo = info.getBoundedTableInfo(key);
                         if(info.getFieldBoundedType(key) == VTableInfo.BindTypeMasterExt) {
-                            VWTransactions.transaction('Create register', () => {
+                            VwTransactions.transaction('Create register', () => {
                                 vregister.addRegister();
                             });
                             saved = true;
@@ -131,11 +131,11 @@ export default class VwRegister extends VwTable {
             }
         }
         if(!saved) {
-            VWTransactions.transaction('Create register', () => {
+            VwTransactions.transaction('Create register', () => {
                 vregister.addRegister();
             });
         } else {
-            VWTransactions.transaction('Save register', () => {
+            VwTransactions.transaction('Save register', () => {
                 vregister.modifyRegister();
             });
         }
@@ -145,7 +145,7 @@ export default class VwRegister extends VwTable {
 
     /**
      * @param {string} pluralId Id of the plural to load
-     * @returns {Array.VWRegister} Array of VWRegister
+     * @returns {Array.VwRegister} Array of VwRegister
      */
     loadPlurals = (pluralId) => {
         if (!pluralId) {
@@ -165,7 +165,7 @@ export default class VwRegister extends VwTable {
         const tableName = tableInfo.name();
         let success = false;
         let currentKey;
-        VWTransactions.transaction('Modify register', () => {
+        VwTransactions.transaction('Modify register', () => {
             for (let key in data) {
                 if (tableInfo.fieldName(key)) {
                     currentKey = key
@@ -194,30 +194,30 @@ export default class VwRegister extends VwTable {
     }
 
     /**
-     * Returns the VWRegister of a master
+     * Returns the VwRegister of a master
      * @param {string} masterId the field master Id
-     * @param {int} masterType VWRegister.TYPE_CECO, VWRegister.TYPE_VREG
+     * @param {int} masterType VwRegister.TYPE_CECO, VwRegister.TYPE_VREG
      * @return {VwRegister}
      */
     getMaster = (masterId, masterType = VwRegister.TYPE_CECO, mapper) => {
         if (typeof masterId !== 'string') {
-            throw new Error('VWRegister.getMaster -> first parameter must be a string');
+            throw new Error('VwRegister.getMaster -> first parameter must be a string');
         }
 
         if (typeof masterType !== 'number') {
-            throw new Error('VWRegister.getMaster -> second parameter must be a number');
+            throw new Error('VwRegister.getMaster -> second parameter must be a number');
         }
 
         if (mapper && !mapper instanceof VwMapper) {
-            throw new Error('VWRegister.getMaster -> third parameter must be an instance if VWMapper');
+            throw new Error('VwRegister.getMaster -> third parameter must be an instance if VwMapper');
         }
 
         const masterVregister = this.vRegister.readMaster(masterId);
         if (masterType === VwRegister.TYPE_CECO) {
             const masterTableInfo = masterVregister.tableInfo();
             const masterMapper = mapper ? mapper : new VwMapper(masterTableInfo);
-            const masterVWRegister = new VwRegister(masterVregister, masterMapper);
-            return masterVWRegister;
+            const masterVwRegister = new VwRegister(masterVregister, masterMapper);
+            return masterVwRegister;
         } else if (masterType === VwRegister.TYPE_VREG) {
             return masterVregister;
         }
@@ -239,11 +239,11 @@ export default class VwRegister extends VwTable {
     getValues = (arrMasterField = ['NAME'], arrFilter = [], format = VwRegister.GET_VALUES_OBJECT) => {
 
         if (!Array.isArray(arrMasterField)) {
-            throw new Error(`VWRegister.getValues -> first parameter must be an array`);
+            throw new Error(`VwRegister.getValues -> first parameter must be an array`);
         }
 
         if (!Array.isArray(arrFilter)) {
-            throw new Error(`VWRegister.getValues -> second parameter must be an array`);
+            throw new Error(`VwRegister.getValues -> second parameter must be an array`);
         }
         let result;
         if (format === VwRegister.GET_VALUES_OBJECT) {
@@ -304,7 +304,7 @@ export default class VwRegister extends VwTable {
 
     deleteRegister = (cascade = false) => {
         const registerId = this.vRegister.fieldToString('ID');
-        VWTransactions.transaction(`Delete ${this.tableName} register, id: ${registerId}`, () => {
+        VwTransactions.transaction(`Delete ${this.tableName} register, id: ${registerId}`, () => {
             if (cascade) {
                 this.deletePlurals();
             }

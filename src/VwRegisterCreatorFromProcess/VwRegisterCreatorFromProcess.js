@@ -1,6 +1,6 @@
-import VWList from '../DataBase/VWList/VWList';
-import VWRegister from '../DataBase/VWRegister/VWRegister';
-import VWObjects from '../ObjectsAPI/VWObjects/VWObjects';
+import VwList from '../DataBase/VwList/VwList';
+import VwRegister from '../DataBase/VwRegister/VwRegister';
+import VwObjects from '../ObjectsAPI/VwObjects/VwObjects';
 
 export default class RegisterCreatorFromProcess {
     constructor(projects=['velneo_verp_2_dat', 'velneo_verp_2_app']) {
@@ -38,7 +38,7 @@ export default class RegisterCreatorFromProcess {
 
     createProcessesRegisters(project, processes, tableIdRef) {
         processes.forEach((processId) => {
-            const processInfo = VWObjects.getProcessObjectInfo(project, processId);
+            const processInfo = VwObjects.getProcessObjectInfo(project, processId);
             const processName = processInfo.name();
             const processComment = processInfo.comments();
             const processData = this.processDataFromComment(processComment);
@@ -54,7 +54,7 @@ export default class RegisterCreatorFromProcess {
         tableIdRef,
         other = {}
     }) {
-        const register = VWRegister.getRegister(tableIdRef, 'PRY', [project, objId]);
+        const register = VwRegister.getRegister(tableIdRef, 'PRY', [project, objId]);
         const keys = Object.keys(processData);
         this.requiredKeys.forEach(requiredKey => {
             if (keys.indexOf(requiredKey) == -1) {
@@ -87,7 +87,7 @@ export default class RegisterCreatorFromProcess {
         processData,
         other
     }) {
-        return VWRegister.createRegister(tableIdRef, {
+        return VwRegister.createRegister(tableIdRef, {
             NAME: processName,
             PRY: project,
             OBJ_ID: objId,
@@ -160,7 +160,7 @@ export default class RegisterCreatorFromProcess {
         tableIdRef
     }) {
 
-        registerList = VWList.search(tableIdRef, 'PRY', [project]);
+        registerList = VwList.search(tableIdRef, 'PRY', [project]);
         const registersToRemove = registerList.filter((register) => {
             try {
                 return processesIds.indexOf(register.OBJ_ID()) == -1;

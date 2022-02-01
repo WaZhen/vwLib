@@ -1,13 +1,13 @@
 export default class VwTransaction {
     static transaction(vwTransactionName, trnFunction) {
         let newVwTransaction;
-        const existVWTransaction = theRoot.existTrans();
+        const existVwTransaction = theRoot.existTrans();
 
-        if (!existVWTransaction) {
+        if (!existVwTransaction) {
             newVwTransaction = theRoot.beginTrans(vwTransactionName);
         }
 
-        if (existVWTransaction || newVwTransaction) {
+        if (existVwTransaction || newVwTransaction) {
             trnFunction();
         }
 
