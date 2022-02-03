@@ -3,7 +3,7 @@ import VwRegister from '../DataBase/VwRegister/VwRegister';
 import VwObjects from '../ObjectsAPI/VwObjects/VwObjects';
 
 export default class RegisterCreatorFromProcess {
-    constructor(projects=['velneo_verp_2_dat', 'velneo_verp_2_app']) {
+    constructor(projects=[]) {
         this.projects = projects;
         this.requiredKeys = [];
     }
