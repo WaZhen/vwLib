@@ -20,7 +20,7 @@ export default class ExecuteProcessManager {
         this.runProcess();
     }
 
-    checkRegisterIn ({registerInIdRef}) {
+    checkRegisterIn({registerInIdRef}) {
         if(registerInIdRef) {
             if(!theRegisterIn) {
                 this.processDefinitionError({error: `The process ${this.processIdRef} expects ${registerInIdRef}, but not registerIn found`});
@@ -30,7 +30,7 @@ export default class ExecuteProcessManager {
             const idRef = tableInfo.idRef();
     
             if(idRef !== registerInIdRef) {
-                this.processDefinitionError({error: `The process ${this.processIdRef} expects . Instead ${idRef} provided`});
+                this.processDefinitionError({error: `The process ${this.processIdRef} expects ${registerInIdRef}. Instead ${idRef} provided`});
             }
         }
     }
