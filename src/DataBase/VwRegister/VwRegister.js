@@ -170,7 +170,15 @@ export default class VwRegister extends VwTable {
                 if (tableInfo.fieldName(key)) {
                     currentKey = key
                     try {
-                        this.vRegister.setField(key, data[key]);
+                        const value = data[key];
+                        let setValue;
+                        if(value instanceof Date) {
+                            const offset = (new Date()).getTimezoneOffset() * 60000;
+                            value = new Date(value.getTime() - offset);
+                        } else {
+                            setValue = value;
+                        }
+                        this.vRegister.setField(key, setValue);
                     } catch(e) {
                         if(!skipErrors) {
                             if(typeof data[currentKey] == "object") {
