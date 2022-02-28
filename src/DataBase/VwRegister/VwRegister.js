@@ -85,10 +85,11 @@ export default class VwRegister extends VwTable {
             if (tableInfo.fieldName(key)) {
                 currentKey = key
                 const value = data[key];
-                if(typeof value == "object" && !(value instanceof Date)) {
+                if(typeof value == "object" && !(value instanceof Date) && (value != null)) {
                     try {
                         const info = new VwTableInfo(tableInfo);
                         const bountdedTableInfo = info.getBoundedTableInfo(key);
+                        // Data for extended tables
                         if(info.getFieldBoundedType(key) == VTableInfo.BindTypeMasterExt) {
                             VwTransactions.transaction('Create register', () => {
                                 vregister.addRegister();
