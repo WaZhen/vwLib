@@ -61,7 +61,8 @@ export default class VwMapper {
                     const fieldId = field.id;
                     return () => {
                         try {
-                            const master = velneoVregister.readMaster(fieldId);
+                            const master = new VRegister(theRoot);
+                            master.copyFrom(velneoVregister.readMaster(fieldId));
                             const mapper = new VwMapper(master.tableInfo(), this.mapType);
                             return new VwRegister(master, mapper);
                         } catch (e) {
