@@ -5,12 +5,14 @@ import VwMapper from '../VwMapper/VwMapper';
 /**
  * Class for list operations
  * @extends VwTable
- * @param {idRef}
+ * @param {VRegisterList} VRegisterList VRegiterList velneo's class
  */
 export default class VwList extends VwTable {
 
-    constructor(idRef) {
+    constructor(VRegisterList) {
+        const idRef = VRegisterList.tableInfo().idRef();
         super(idRef);
+        this.vwRegisters = VwList.parseArray(VRegisterList);
     }
 
     /**
@@ -18,9 +20,9 @@ export default class VwList extends VwTable {
      * @param {string} idRef Table idRef
      * @param {string} vWIndex Index id 
      * @param {string[]} vWParts Array with the parts of the index
+     * @returns {VwRegister[]} Search result
      */
     static search(idRef, vWIndex, vWParts, sort=[]) {
-        // Devuelve un array de VRegister 
         if (typeof idRef !== 'string') {
             throw new Error('VwList.search first parameter must be a string');
         }
@@ -28,7 +30,7 @@ export default class VwList extends VwTable {
             throw new Error('VwList.search second parameter must be a string');
         }
         if (!Array.isArray(vWParts)) {
-            throw new Error('VwList.search. third parameter must bu an array');
+            throw new Error('VwList.search. third parameter must be an array');
         }
 
         const vWList = new VRegisterList(theRoot);
