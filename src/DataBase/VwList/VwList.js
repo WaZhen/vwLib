@@ -3,9 +3,10 @@ import VwRegister from '../VwRegister/VwRegister';
 import VwMapper from '../VwMapper/VwMapper';
 
 /**
- * Class for list operations
+ * <p>Clase para trabajar con listas de Velneo.</p>
+ * <p>En caso de crear una instancia usando el constructor, se crea una propiedad vwRegisters que contiene un array de [VwRegister]{@link VwRegister}</p>
  * @extends VwTable
- * @param {VRegisterList} VRegisterList VRegiterList velneo's class
+ * @param {VRegisterList} VRegisterList [VRegisterList]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vregisterlist}
  */
 export default class VwList extends VwTable {
 
@@ -16,26 +17,27 @@ export default class VwList extends VwTable {
     }
 
     /**
-     * 
-     * @param {string} idRef Table idRef
-     * @param {string} vWIndex Index id 
-     * @param {string[]} vWParts Array with the parts of the index
-     * @returns {VwRegister[]} Search result
+     * Herramienta principal de búsqueda. Equivalente a cargar lista
+     * @param {string} idRef idRef de la tabla de búsqueda
+     * @param {string} vwIndex ID del índice por el que se va a cargar lista
+     * @param {string[]} vwParts Array con los valores de las partes de resolución del índice
+     * @param {string[]} [sort=[]] Ordena el resultado por los campos indicados en el array
+     * @returns {VwRegister[]} Array de [VwRegister]{@link VwRegister}
      */
-    static search(idRef, vWIndex, vWParts, sort=[]) {
+    static search(idRef, vwIndex, vwParts, sort=[]) {
         if (typeof idRef !== 'string') {
             throw new Error('VwList.search first parameter must be a string');
         }
-        if (typeof vWIndex !== 'string') {
+        if (typeof vwIndex !== 'string') {
             throw new Error('VwList.search second parameter must be a string');
         }
-        if (!Array.isArray(vWParts)) {
+        if (!Array.isArray(vwParts)) {
             throw new Error('VwList.search. third parameter must be an array');
         }
 
         const vWList = new VRegisterList(theRoot);
         vWList.setTable(idRef);
-        vWList.load(vWIndex, vWParts);
+        vWList.load(vwIndex, vwParts);
         if(sort.length > 0) {
             vWList.sort(sort);
         }
@@ -54,9 +56,10 @@ export default class VwList extends VwTable {
     }
 
     /**
-     * Returns an array of VwRegisters from a velneo VRegisterList
-     * @param {VRegisterList} Velneo VRegisterList
-     * @return {VwRegister[]} Array of VwRegisters
+     * <p>Retorna un array de [VwRegister]{@link VwRegister} a partir de una 
+     * [VRegisterList]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vregisterlist}</p>
+     * @param {VRegisterList} 
+     * @return {VwRegister[]} 
      */
     static parseArray = (velneoVRegisterList) => {
         const tableInfo = velneoVRegisterList.tableInfo();
@@ -73,8 +76,10 @@ export default class VwList extends VwTable {
     };
 
     /**
-     * @param {VRegisterList} Velneo VRegister list
-     * @return {string} table idRef
+     * <p>Retorna el idRef de la tabla de una 
+     * [VRegisterList]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vregisterlist}</p>
+     * @param {VRegisterList} VRegisterList [VRegisterList]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vregisterlist}
+     * @return {string} Idref de la tabla
      */
     static tableIdRef = (velneoVRegisterList) => {
         const tableInfo = velneoVRegisterList.tableInfo();

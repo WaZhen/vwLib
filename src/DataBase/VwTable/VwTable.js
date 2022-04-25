@@ -1,19 +1,10 @@
-import VwTransactions from '../VwTransactions/VwTransactions';
-
 const indexTypesNames = ['Clave única', 'Palabras', 'Múltiples claves', 'Acepta repetidas', 'Trozos de palabras'];
 
 /**
- * Class for table operations
- * @param{idRef} idRef projectAlias/TableId of the Velneo object
+ * Clase para operaciones de tabla
+ * @param {idRef} idRef de la tabla aliasProyecto/idTabla
  */
 export default class VwTable {
-    /**
-     * @type{String[]}
-     */
-    static get indexTypesNames() {
-        return indexTypesNames;
-    }
-
     constructor(idRef) {
         const vWProject = idRef.split("/")[0];
         const vWTable = idRef.split("/")[1];
@@ -22,7 +13,32 @@ export default class VwTable {
     };
 
     /**
-     * @type {Array}
+     * <p>Constante de tipo array que contiene los nombres de los tipos de índices</p>
+     * <ul>
+     *   <li>Clave única</li>
+     *   <li>Palabras</li>
+     *   <li>Múltiples claves</li>
+     *   <li>Acepta repetidas</li>
+     *   <li>Trozos de palabras</li>
+     * </ul>
+     * @type {String[]}
+     */
+    static get indexTypesNames() {
+        return indexTypesNames;
+    }
+
+    /**
+     * @typedef {Object} vWFields
+     * @property {string} id Id del campo
+     * @property {string} name Nombre del campo
+     * @property {int} type Tipo de campo -> [enum]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vtableinfo/vtableinfo-enumeraciones#tipos-de-campo}
+     * @property {int} bindType Tipo de enlace -> [enum]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vtableinfo/vtableinfo-enumeraciones#tipos-de-enlaces-de-campo-bindtype}
+     * @property {int} objectType Tipo de campo objeto -> [enum]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vtableinfo/vtableinfo-enumeraciones#tipos-de-enlaces-de-campo-bindtype}
+     */
+
+    /**
+     * <p>Contiene un array de objetos que representan los campos</p>
+     * @type {vWFields[]}
      */
     get vWFields() {
         const vWFields = [];
@@ -64,7 +80,8 @@ export default class VwTable {
     }
 
     /**
-     * @type{Array}
+     * Contiene los IDs de los índices de la tabla
+     * @type {String[]}
      */
     get vWIdexes() {
         const vWIdexes = [];
