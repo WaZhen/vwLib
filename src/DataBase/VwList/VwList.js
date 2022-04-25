@@ -60,6 +60,7 @@ export default class VwList extends VwTable {
      * [VRegisterList]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vregisterlist}</p>
      * @param {VRegisterList} 
      * @return {VwRegister[]} 
+     * @method
      */
     static parseArray = (velneoVRegisterList) => {
         const tableInfo = velneoVRegisterList.tableInfo();
@@ -80,6 +81,7 @@ export default class VwList extends VwTable {
      * [VRegisterList]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vregisterlist}</p>
      * @param {VRegisterList} VRegisterList [VRegisterList]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vregisterlist}
      * @return {string} Idref de la tabla
+     * @method
      */
     static tableIdRef = (velneoVRegisterList) => {
         const tableInfo = velneoVRegisterList.tableInfo();
