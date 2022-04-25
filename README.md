@@ -1,6 +1,6 @@
 # vwLib
 
-Docs at https://vwlib.wazhen.me
+Docs at https://wazhen.github.io/vwLib/
 
 # Instalation
 
