@@ -1,7 +1,7 @@
 import VwObjectInfo from '../VwObjectInfo/VwObjectInfo';
 
 /** 
- * Class for maping form objects
+ * Herramienta para mapear vObjectInfo de un formulario
  * @extends VwObjectInfo
  * @param {VwObjectInfo}
  */

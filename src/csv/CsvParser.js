@@ -1,20 +1,22 @@
 import CSV from 'comma-separated-values';
 
 /**
- * Class to manage CSV operations
+ * @hideconstructor
+ * @classdesc
+ * Herramientas para operaciones con ficheros CSV
  */
 export default class CsvParser {
     /**
-     * Get a cell of a csv row
-     * @param {string} row The csv row to parse
-     * @param {string} delimiter The character used as delimiter
+     * Obtener una celda a partir de una fila
+     * @param {string} row Cadena de texto con la fila a procesar
+     * @param {int} column The column you want to 
+     * @param {string} [delimiter=;] Caracter usado como delimitador
      */
-    static getCell(row, delimiter, column) {
+    static getCell(row, column, delimiter=";") {
         const result = new CSV(row, {
             lineDelimiter: '\n',
             cellDelimiter: delimiter
         }).parse();
-        alert(result)
         return result[column];
     }
 };

@@ -1,17 +1,25 @@
 import generaLogError from '../Debug/VwErrorLog'
 /**
- * Class for manage files
+ * @classdesc
+ * Utilidades para gestionar ficheros
+ * @hideconstructor
  */
 export default class VwFile {
     /**
-     * @static Method to read a single line from a plain text file
-     * @param {string} filePath The path of the file to read
-     * @param {int} position The position of the cursor
-     * @return {object} success and string 
+     * Leer una línea de un fichero en texto plano
+     * @param {string} filePath Ruta del fichero
+     * @param {int} position Posición del cursor
+     * @return {returnData} success and string 
      */
     static readLineAtPos(filePath, position) {
         importClass('VTextFile');
         importClass('VFile');
+        /**
+         * @typedef {object} returnData
+         * @param {boolean} success Exito de la operación
+         * @param {string} text Contenido leído del fichero
+         * @param {int} position Posición del cursor al final de la lectura
+         */
 
         const file = new VTextFile(filePath);
 
@@ -48,6 +56,12 @@ export default class VwFile {
             })
         }
     }
+
+    /**
+     * Añade una línea al final de un fichero de texto plano
+     * @param {string} filePath Ruta del fichero
+     * @param {string} text Texto a añadir
+     */
     static appendLine(filePath, text) {
         importClass('VTextFile');
         importClass('VFile');
@@ -60,6 +74,12 @@ export default class VwFile {
         }
     }
 
+    /**
+     * Devuelve el contenido del fichero en base 64
+     * @param {string} path Ruta del fichero
+     * @returns {string} Contenido en base 64
+     * @method
+     */
     static pathToBase64 = (path) => {
         try {
             importClass("VTextFile");
@@ -81,6 +101,12 @@ export default class VwFile {
         }
     }
 
+    /**
+     * A partir de una lista de ficheros, devuelve una lista de contenidos en base 64
+     * @param {string[]} pathArray Array the rutas de fichero
+     * @returns {string[]} Devuelve un base 64 por fichero
+     * @method
+     */
     static pathsToBase64 = (pathArray) => {
         try {
             const filesB64 = [];

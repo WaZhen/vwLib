@@ -1,12 +1,26 @@
 import VwRegister from '../../DataBase/VwRegister/VwRegister';
 import VwMapper from '../../DataBase/VwMapper/VwMapper';
+
 /**
- * Class for managing Catcher edits
+ * @hideconstructor
+ * @classdesc
+ * Utilidades para catcher edit para utilizar en manejadores de evento
  */
 export default class VwCatcherEdit {
+
     /**
-     * @static Method to set the list of a catcher edit and set the selected value
-     * @param {object} object {idCatcherEdit, RegisterList, registerTable, registerIndex, resolvers}
+     * @typedef dataOptions
+     * @property {string} idCatcherEdit id del control de tipo catcher edit
+     * @property {object} vRegisterList {@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vregisterlist} 
+     * que va a alimentar el catcher edit
+     * @property {string} registerTable idRef del registro seleccionado inicial
+     * @property {string} registerIndex indice por el que localizar el registro
+     * @property {any[]} resolvers partes de resolución del índice para el registro seleccionado inicial
+     */
+
+    /**
+     * Establece los valores del catcher edit y selecciona el valor inicial
+     * @param {dataOptions} dataOptions {idCatcherEdit, RegisterList, registerTable, registerIndex, resolvers}
      * @return {undefined} undefined 
      */
     static setData({

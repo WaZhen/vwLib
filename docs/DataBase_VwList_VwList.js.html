@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: DataBase/VwList/VwList.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: DataBase/VwList/VwList.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import VwTable from '../VwTable/VwTable';
+import VwRegister from '../VwRegister/VwRegister';
+import VwMapper from '../VwMapper/VwMapper';
+
+/**
+ * &lt;p>Clase para trabajar con listas de Velneo.&lt;/p>
+ * &lt;p>En caso de crear una instancia usando el constructor, se crea una propiedad vwRegisters que contiene un array de [VwRegister]{@link VwRegister}&lt;/p>
+ * @extends {VwTable}
+ * @param {VRegisterList} VRegisterList [VRegisterList]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vregisterlist}
+ */
+export default class VwList extends VwTable {
+
+    constructor(VRegisterList) {
+        const idRef = VRegisterList.tableInfo().idRef();
+        super(idRef);
+        this.vwRegisters = VwList.parseArray(VRegisterList);
+    }
+
+    /**
+     * Herramienta principal de búsqueda. Equivalente a cargar lista
+     * @param {string} idRef idRef de la tabla de búsqueda
+     * @param {string} vwIndex ID del índice por el que se va a cargar lista
+     * @param {string[]} vwParts Array con los valores de las partes de resolución del índice
+     * @param {string[]} [sort=[]] Ordena el resultado por los campos indicados en el array
+     * @returns {VwRegister[]} Array de [VwRegister]{@link VwRegister}
+     */
+    static search(idRef, vwIndex, vwParts, sort=[]) {
+        if (typeof idRef !== 'string') {
+            throw new Error('VwList.search first parameter must be a string');
+        }
+        if (typeof vwIndex !== 'string') {
+            throw new Error('VwList.search second parameter must be a string');
+        }
+        if (!Array.isArray(vwParts)) {
+            throw new Error('VwList.search. third parameter must be an array');
+        }
+
+        const vWList = new VRegisterList(theRoot);
+        vWList.setTable(idRef);
+        vWList.load(vwIndex, vwParts);
+        if(sort.length > 0) {
+            vWList.sort(sort);
+        }
+        const tableInfo = vWList.tableInfo()
+        const mapper = new VwMapper(tableInfo)
+        const numResults = vWList.size();
+        const results = [];
+
+        for (let i = 0; i &lt; numResults; i++) {
+            const result = new VRegister(theRoot);
+            result.copyFrom(vWList.readAt(i));
+            results.push(new VwRegister(result, mapper));
+        }
+
+        return results;
+    }
+
+    /**
+     * &lt;p>Retorna un array de [VwRegister]{@link VwRegister} a partir de una 
+     * [VRegisterList]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vregisterlist}&lt;/p>
+     * @param {VRegisterList} 
+     * @return {VwRegister[]} 
+     * @method
+     */
+    static parseArray = (velneoVRegisterList) => {
+        const tableInfo = velneoVRegisterList.tableInfo();
+        const mapper = new VwMapper(tableInfo);
+        const numResults = velneoVRegisterList.size();
+        const results = [];
+        for (let i = 0; i &lt; numResults; i++) {
+            const result = new VRegister(theRoot);
+            result.copyFrom(velneoVRegisterList.readAt(i));
+            results.push(new VwRegister(result, mapper));
+        }
+
+        return results;
+    };
+
+    /**
+     * &lt;p>Retorna el idRef de la tabla de una 
+     * [VRegisterList]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vregisterlist}&lt;/p>
+     * @param {VRegisterList} VRegisterList [VRegisterList]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vregisterlist}
+     * @return {string} Idref de la tabla
+     * @method
+     */
+    static tableIdRef = (velneoVRegisterList) => {
+        const tableInfo = velneoVRegisterList.tableInfo();
+        const idRef = tableInfo.idRef();
+        return idRef;
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CsvParser.html">CsvParser</a></li><li><a href="VwCatcherEdit.html">VwCatcherEdit</a></li><li><a href="VwFile.html">VwFile</a></li><li><a href="VwForm.html">VwForm</a></li><li><a href="VwList.html">VwList</a></li><li><a href="VwMapper.html">VwMapper</a></li><li><a href="VwObjectInfo.html">VwObjectInfo</a></li><li><a href="VwObjects.html">VwObjects</a></li><li><a href="VwProject.html">VwProject</a></li><li><a href="VwQuery.html">VwQuery</a></li><li><a href="VwRegister.html">VwRegister</a></li><li><a href="VwRequest.html">VwRequest</a></li><li><a href="VwTable.html">VwTable</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon Apr 25 2022 15:44:04 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

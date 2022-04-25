@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: VwMapper</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: VwMapper</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>VwMapper<span class="signature">(VTableInfo, mapType<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description"><p>Clase que mapea todos los campos de una tabla creando una función que devuelve su valor</p>
+<p>Gestiona automáticamente el tipo de valor: numérico, alfabético, fecha, enlace maestro, etc...</p></div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="VwMapper"><span class="type-signature"></span>new VwMapper<span class="signature">(VTableInfo, mapType<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>VTableInfo</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">VTableInfo</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><a href="https://doc.velneo.es/vtableinfo.html">VTableInfo</a></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>mapType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    VwMapper.MAP_TYPE_MAP
+                
+                </td>
+            
+
+            <td class="description last">Por defecto gestiona el tipo de valor. Pasar VwMapper.MAP_TYPE_ALL_STRING para que todos los campos se resuelvan como fieldToSTring</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="DataBase_VwMapper_VwMapper.js.html">DataBase/VwMapper/VwMapper.js</a>, <a href="DataBase_VwMapper_VwMapper.js.html#line13">line 13</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".MAP_TYPE_ALL_STRING"><span class="type-signature">(static) </span>MAP_TYPE_ALL_STRING<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Enum = 1: no gestiona tipo de retorno. Intenta hacer fieldToString al resolver un campo
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="DataBase_VwMapper_VwMapper.js.html">DataBase/VwMapper/VwMapper.js</a>, <a href="DataBase_VwMapper_VwMapper.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".MAP_TYPE_MAP"><span class="type-signature">(static) </span>MAP_TYPE_MAP<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Enum = 0: gestiona el tipo de retorno
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="DataBase_VwMapper_VwMapper.js.html">DataBase/VwMapper/VwMapper.js</a>, <a href="DataBase_VwMapper_VwMapper.js.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CsvParser.html">CsvParser</a></li><li><a href="VwCatcherEdit.html">VwCatcherEdit</a></li><li><a href="VwFile.html">VwFile</a></li><li><a href="VwForm.html">VwForm</a></li><li><a href="VwList.html">VwList</a></li><li><a href="VwMapper.html">VwMapper</a></li><li><a href="VwObjectInfo.html">VwObjectInfo</a></li><li><a href="VwObjects.html">VwObjects</a></li><li><a href="VwProject.html">VwProject</a></li><li><a href="VwQuery.html">VwQuery</a></li><li><a href="VwRegister.html">VwRegister</a></li><li><a href="VwRequest.html">VwRequest</a></li><li><a href="VwTable.html">VwTable</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon Apr 25 2022 15:44:04 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

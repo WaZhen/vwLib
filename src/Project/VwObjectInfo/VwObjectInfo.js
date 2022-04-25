@@ -1,5 +1,5 @@
 /**
- * Class for maping {@link https://doc.velneo.es/vobjectinfo.html|VObjectInfo}
+ * Mapeo de {@link https://doc.velneo.es/vobjectinfo.html|VObjectInfo}
  */
 export default class VwObjectInfo {
     /**
@@ -17,6 +17,7 @@ export default class VwObjectInfo {
     }
 
     /**
+     * Devuelve el id del objeto
      * @returns {string}
      */
     get id() {
@@ -24,6 +25,7 @@ export default class VwObjectInfo {
     }
 
     /**
+     * Devuelve el idRef del objeto
      * @returns {string}
      */
     get idRef() {
@@ -32,9 +34,9 @@ export default class VwObjectInfo {
 
     // Getters
     /**
-     * 
+     * Obtiene todos los subobjetos de un tipo
      * @param {number} type
-     * @returns {VObjectInfo} Reference: {@link https://doc.velneo.es/vobjectinfo.html|VObjectInfo}
+     * @returns {VObjectInfo} {@link https://doc.velneo.es/vobjectinfo.html|VObjectInfo}
      */
     getSubOjects(type) {
         const subObjects = this.subObjects.filter(subObject => subObject.propertyData(0) == type);
@@ -42,12 +44,14 @@ export default class VwObjectInfo {
         return vWSubObjects;
     }
     /**
+     * Devuelve subobjetos de tipo dibujo
      * @type {VwObjectInfo}
      */
     get pictures() {
         return this.getSubOjects(0);
     }
     /**
+     * Devuelve subobjetos de tipo texto estático
      * @type {VwObjectInfo}
      */
     get staticTexts() {
@@ -55,6 +59,7 @@ export default class VwObjectInfo {
     }
 
     /**
+     * Devuelve subobjetos de tipo nombre de campo
      * @type {VwObjectInfo}
      */
     get fieldNames() {
@@ -62,6 +67,7 @@ export default class VwObjectInfo {
     }
 
     /**
+     * Devuelve subobjetos de tipo edición de texto
      * @type {VwObjectInfo}
      */
     get textEdits() {
@@ -69,6 +75,7 @@ export default class VwObjectInfo {
     }
 
     /**
+     * Devuelve subobjetos de tipo botones
      * @type {VwObjectInfo}
      */
     get buttons() {
@@ -76,6 +83,7 @@ export default class VwObjectInfo {
     }
 
     /**
+     * Devuelve subobjetos de tipo botón de radio
      * @type {VwObjectInfo}
      */
     get radios() {
@@ -83,6 +91,7 @@ export default class VwObjectInfo {
     }
 
     /**
+     * Devuelve subobjetos de tipo botón de check
      * @type {VwObjectInfo}
      */
     get checkButtons() {
@@ -90,6 +99,7 @@ export default class VwObjectInfo {
     }
 
     /**
+     * Devuelve subobjetos de tipo edición numérica
      * @type {VwObjectInfo}
      */
     get numericEdits() {
@@ -97,6 +107,7 @@ export default class VwObjectInfo {
     }
 
     /**
+     * Devuelve subobjetos de tipo edición de fecha
      * @type {VwObjectInfo}
      */
     get dateEdits() {
@@ -104,6 +115,7 @@ export default class VwObjectInfo {
     }
 
     /**
+     * Devuelve subobjetos de tipo separador
      * @type {VwObjectInfo}
      */
     get splitters() {
@@ -111,6 +123,7 @@ export default class VwObjectInfo {
     }
 
     /**
+     * Devuelve subobjetos de tipo combo
      * @type {VwObjectInfo}
      */
     get comboBoxes() {

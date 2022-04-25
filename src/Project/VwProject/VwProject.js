@@ -1,35 +1,50 @@
 import VwForm from "../VwForm/VwForm";
 import VwProjectUtils from "./VwProjectUtils";
 /**
- * Class for manage velneo solutions
+ * Herramientas para gestionar los proyectos de una solución
+ * @param {VProjectInfo} [vWProjectInfo=theApp.mainProjectInfo()] {@link https://doc.velneo.es/vprojectinfo.html|VProjectInfo}
  */
 export default class VwProject {
-    /**
-     * Creates an instance of VwProject
-     * @param {VProjectInfo} vWProjectInfo {@link https://doc.velneo.es/vprojectinfo.html|VProjectInfo}
-     */
     constructor(projectInfo=undefined) {
         if(projectInfo) {
+            /**
+             * Contiene el [vProjectInfo]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vprojectinfo} pasado en el constructor
+             * @type {object}
+             */
             this.projectInfo = projectInfo;
         } else {
             this.projectInfo = theApp.mainProjectInfo();
         }
     }
 
+    /**
+     * Nombre del proyecto
+     * @type {string}
+     */
     get name() {
         return this.projectInfo.name();
     }
 
+    /**
+     * Tipo de proyecto. [Valores]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vprojectinfo#enumeraciones}
+     * @type {int}
+     */
     get type() {
         return this.projectInfo.type();
     }
 
+    /**
+     * Alias del proyecto
+     * @type {string}
+     */
     get alias() {
         return this.projectInfo.alias();
     }
 
     /**
-     * @type {Array.<VwProject>}
+     * Devuelve un array de {@link VwProject} de tipo aplicación
+     * @returns {VwProject[]}
+     * 
      */
     getInheritedAppProjects() {
         // Returns an array of app projects
@@ -37,7 +52,8 @@ export default class VwProject {
     }
 
     /**
-     * @type {Array.<VwProject>}
+     * Devuelve un array de {@link VwProject} de tipo datos
+     * @returns {VwProject[]}
      */
     getInheritedDatProjects() {
         // Returns an array of dat projects
@@ -45,8 +61,8 @@ export default class VwProject {
     }
 
     /**
-     * Array de object infos
-     * @type {Array}
+     * Array de [VObjectInfo]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vobjectinfo} de las tablas
+     * @type {Object[]} 
      */
     get tables() {
         // Returns an array of tableInfo
@@ -66,7 +82,8 @@ export default class VwProject {
     }
 
     /**
-     * @return {Array.<VwForm>}
+     * Devuelve los formularios del proyecto
+     * @type {VwForm[]}
      */
     get forms() {
         // Return an array of vObjectInfo of forms
@@ -85,6 +102,13 @@ export default class VwProject {
         return forms;
     }
 
+    /**
+     * Devuelve los proyectos heredados
+     * @param {*} startingProject Proyecto del que se quieren obtener herencias
+     * @param {*} [projectType=undefined] Tipo de proyecto
+     * @param {*} [foundProjects=[]] Resultados previos para llamadas recursivas del propio método. Se recomienda no inicializar
+     * @returns 
+     */
     static getInheritedProjectList(startingProject, projectType=undefined, foundProjects=[]) {
         const projects = [];
         const found = foundProjects;
@@ -116,6 +140,12 @@ export default class VwProject {
         return projects;
     }
 
+    /**
+     * Obtiene los vObjectInfo del tipo especificado del proyecto
+     * @param {object} project [VProyectInfo]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vprojectinfo}
+     * @param {int} objectType [Enumeración]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vobjectinfo/vobjectinfo-enumeraciones#tipos-de-objetos}
+     * @returns {object[]} Array de [VObjectInfo]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vobjectinfo}
+     */
     getProjectObjects(project, objectType) {
         var objectList = [];
         var objectCount = project.allObjectCount(objectType);

@@ -5,16 +5,24 @@ const CONST_MAP_TYPE_MAP = 0;
 const CONST_MAP_TYPE_ALL_STRING = 1;
 
 /**
+ * <p>Clase que mapea todos los campos de una tabla creando una función que devuelve su valor</p>
+ * <p>Gestiona automáticamente el tipo de valor: numérico, alfabético, fecha, enlace maestro, etc...</p>
  * @param {VTableInfo} VTableInfo {@link https://doc.velneo.es/vtableinfo.html|VTableInfo}
+ * @param {int} [mapType=VwMapper.MAP_TYPE_MAP] Por defecto gestiona el tipo de valor. Pasar VwMapper.MAP_TYPE_ALL_STRING para que todos los campos se resuelvan como fieldToSTring
  */
 export default class VwMapper {
-    /**
-     * Property: Object that contains the functions that return the value of the mapped field
-     */
     mappedValues = {};
+
+    /**
+     * Enum = 0: gestiona el tipo de retorno
+     */
     static get MAP_TYPE_MAP() {
         return CONST_MAP_TYPE_MAP
     };
+
+    /**
+     * Enum = 1: no gestiona tipo de retorno. Intenta hacer fieldToString al resolver un campo
+     */
     static get MAP_TYPE_ALL_STRING() {
         return CONST_MAP_TYPE_ALL_STRING
     };

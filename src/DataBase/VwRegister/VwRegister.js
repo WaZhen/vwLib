@@ -5,13 +5,10 @@ import VwTransactions from '../VwTransactions/VwTransactions';
 import VwTableInfo from '../VwTableInfo/VwTableInfo';
 
 /**
- * Class for register operations
+ * Clase que representa un registro
  * @extends VwTable
  * @param {VRegister} VRegister {@link https://doc.velneo.es/vregister.html|VRegister}
- * @param {VwMapper} vWMapper Optional. If provided, the class will map all the register values ORM like
- * @property {VRegister} vRegister Velneo VRegister {@link https://doc.velneo.es/vregister.html|VRegister}
- * @property {string} tableName Table name
- * @property {string} tableId Table id
+ * @param {VwMapper} [vWMapper] Si se le pasa un {@link VwMapper}, se crea un método por cada campo para acceder al valor o navegar al maestro
  */
 export default class VwRegister extends VwTable {
 
@@ -35,10 +32,10 @@ export default class VwRegister extends VwTable {
     }
 
     /**
-     * Returns a VwRegister that matches the query made with the parameters. If no results found returns null
-     * @param {string} idRefTable 
-     * @param {string} index 
-     * @param {string[]} resolver 
+     * Utiliza un índice de clave única para directamente localizar y obtener una instancia
+     * @param {string} idRefTable idRef aliasProyecto/idTabla de la tabla
+     * @param {string} index Índice de clave única
+     * @param {string[]} resolver Array con los valores que resuelven el índice
      * @returns {VwRegister} VwRegister
      */
     static getRegister(idRefTable, index, resolver) {
@@ -69,9 +66,9 @@ export default class VwRegister extends VwTable {
     }
 
     /**
-     * Creates a register
-     * @param {string} tableIdRef table idRef
-     * @param {JSON} data Json with the register data. Keys must be fields IDs.
+     * Da de alta un registro y lo retorna como una instancia de VwRegister
+     * @param {string} tableIdRef idRef de la tabla aliasProyecto/idTabla
+     * @param {Object} data Objeto con los valores del registro a crear. Las claves son los id de los campos (en mayúsculas)
      * @returns {VwRegister} VwRegister
      */
     static createRegister(tableIdRef, data, skipErrors=false) {
@@ -145,8 +142,10 @@ export default class VwRegister extends VwTable {
     }
 
     /**
-     * @param {string} pluralId Id of the plural to load
-     * @returns {Array.VwRegister} Array of VwRegister
+     * Carga los plurales del registro y devuelve un array de {@link VwRegister}
+     * @param {string} pluralId id del plural a cargar
+     * @returns {VwRegister[]}
+     * @method
      */
     loadPlurals = (pluralId) => {
         if (!pluralId) {
@@ -157,9 +156,9 @@ export default class VwRegister extends VwTable {
     }
 
     /**
-     * 
-     * @param {JSON} data Json with the register data. Keys must be fields IDs.
-     * @returns {bolean} Success
+     * Modificar un registro
+     * @param {Object} data Objeto con los datos. Las claves son los IDs de los campos a modificar
+     * @returns {bolean} Devuelve si la transacción ha tenido éxito
      */
     modifyRegister(data, skipErrors=false) {
         const tableInfo = this.vRegister.tableInfo();
@@ -195,12 +194,6 @@ export default class VwRegister extends VwTable {
         return success;
     }
 
-    /**
-     * Returns the VwRegister of a master
-     * @param {string} masterId the field master Id
-     * @param {int} masterType VwRegister.TYPE_CECO, VwRegister.TYPE_VREG
-     * @return {VwRegister}
-     */
     getMaster = (masterId, masterType = VwRegister.TYPE_CECO, mapper) => {
         if (typeof masterId !== 'string') {
             throw new Error('VwRegister.getMaster -> first parameter must be a string');
@@ -235,8 +228,8 @@ export default class VwRegister extends VwTable {
      * Returns a Json with every table field information and its value for the register
      * @param {string[]} arrMasterField Array of masters IDs to find
      * @param {string[]} arrFilter Array to filter the values wanted. If empty or not provided the function will return all the fields
-     * @return {getAllValuesReturn[]} 
-     *      Returns an array of objects with the information
+     * @return {getAllValuesReturn[]} Returns an array of objects with the information
+     * @method
      */
     getValues = (arrMasterField = ['NAME'], arrFilter = [], format = VwRegister.GET_VALUES_OBJECT) => {
 
@@ -304,6 +297,11 @@ export default class VwRegister extends VwTable {
         return result;
     }
 
+    /**
+     * Elimina el registro
+     * @param {boolean} cascade true si quieres eliminar en cascada
+     * @method
+     */
     deleteRegister = (cascade = false) => {
         const registerId = this.vRegister.fieldToString('ID');
         VwTransactions.transaction(`Delete ${this.tableName} register, id: ${registerId}`, () => {
@@ -314,6 +312,10 @@ export default class VwRegister extends VwTable {
         });
     }
 
+    /**
+     * Elimina todos los plurales del registro en cascada
+     * @method
+     */
     deletePlurals() {
         const pluralsIdList = this.getPluralsArray();
         pluralsIdList.forEach(pluralId => {
@@ -324,6 +326,10 @@ export default class VwRegister extends VwTable {
         })
     }
 
+    /**
+     * Obtiene un array con los ids de los plurales del registro
+     * @returns {string[]}
+     */
     getPluralsArray() {
         const tableInfo = this.vRegister.tableInfo();
         const pluralCount = tableInfo.pluralCount();
@@ -336,6 +342,11 @@ export default class VwRegister extends VwTable {
         return pluralList;
     }
 
+    /**
+     * Utilidad de validación. Genera un error si el vRegister no pertenece a la tabla tableIdRef
+     * @param {Object} vRegister [vRegister]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vregister}
+     * @param {string} tableIdRef idRef de la tabla aliasProyecto/idTabla
+     */
     static checkRegister(vRegister, tableIdRef) {
         const tableInfo = vRegister.tableInfo();
         if (tableInfo.idRef() != tableIdRef) {
@@ -344,9 +355,9 @@ export default class VwRegister extends VwTable {
     }
 
     /**
-     * Returns a json with fields ID as keys an field values as values.
-     * Not include relationship fields
-     * @param {*} except Fields to exclude
+     * Devuelve un json con todos los campos que no son relaciones a otras tablas
+     * @param {string[]} except campos a excluir del resultado
+     * @returns {Object} Json que mapea ID campo -> valor
      */
     getNotMastersFieldsJson(except=[]) {
         returnJson = {};
@@ -368,7 +379,7 @@ export default class VwRegister extends VwTable {
     }
 
     /**
-     * Prints a list with the IDs of the fields
+     * Imprime en un alert los ids de los campos. Utilidad para desarrollo o depuración
      */
     printFieldIdList() {
         printString = "";
@@ -380,10 +391,18 @@ export default class VwRegister extends VwTable {
         alert(printString);
     }
 
+    /**
+     * Nombre plural de la tabla
+     * @type {string}
+     */
     get pluralTableName() {
         this.vRegister.tableInfo().name();
     }
 
+    /**
+     * Nombre singular de la tabla
+     * @type {string}
+     */
     get singleTableName() {
         this.vRegister.tableInfo().singleName();
     }

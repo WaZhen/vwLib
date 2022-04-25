@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx webpack --config webpack.config.js --env.mode=production",
     "dev": "npx webpack --config webpack.config.js --env.mode=development",
-    "jsdoc": "./node_modules/.bin/jsdoc src -r -c jsdoc.json -d docs"
+    "jsdoc": "jsdoc -r -c jsdoc.json -d docs"
   },
   "repository": {
     "type": "git",
@@ -22,11 +22,11 @@
   },
   "homepage": "https://github.com/WaZhen/vwLib#readme",
   "devDependencies": {
-    "jsdoc": "^3.6.6",
+    "jsdoc": "^3.6.10",
     "jsdoc-export-default-interop": "^0.3.1"
   },
   "dependencies": {
     "comma-separated-values": "^3.6.4",
-    "schema-inspector": "^1.7.0"
+    "schema-inspector": "^2.0.1"
   }
 }
