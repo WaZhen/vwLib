@@ -1,10 +1,12 @@
 /**
  * @hideconstructor
+ * @classdesc
  * Utilidades para {@link https://doc.velneo.es/b%C3%BAsquedas.html|Búsquedas}
  */
+
 export default class VwQuery {
     /**
-     * @static Lanza una {@link https://doc.velneo.es/b%C3%BAsquedas.html|Búsquedas}
+     * Lanza una {@link https://doc.velneo.es/b%C3%BAsquedas.html|Búsqueda}
      * @param {string} queryIdRef idRef del objeto tipo búsqueda aliasProyecto/idBusqueda
      * @param {object} queryArguments Json. Poner los IDs de las variables locales de la búsqueda en las claves, y resolver en los valores
      * @returns {VRegisterList} {@link https://doc.velneo.es/vregisterlist.html|VRegisterList} de la api de velneo
