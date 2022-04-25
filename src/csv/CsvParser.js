@@ -1,6 +1,8 @@
 import CSV from 'comma-separated-values';
 
 /**
+ * @hideconstructor
+ * @classdesc
  * Herramientas para operaciones con ficheros CSV
  */
 export default class CsvParser {
