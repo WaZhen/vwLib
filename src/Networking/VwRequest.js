@@ -1,18 +1,20 @@
 /**
- * Class for using XmlHttpRequest
+ * @classdesc
+ * Herramientas XmlHttpRequest
+ * @hideconstructor
  */
 export default class VwRequest {
     /**
      * 
-     * @param {string} [method=GET] - String with the http method
-     * @param {object} [data=undefined] - Required for POST/PUT/DELETE/PATCH methods
+     * @param {string} [method=GET] - método http
+     * @param {object} [data=undefined] - Cuerpo. Obligatorio para los métodos POST/PUT/DELETE/PATCH
      * @param {boolean} [async=true]
-     * @param {string} [contentType=application/json; charset=UTF-8] - Override if other content type
-     * @param {string} [headers={}] - Additional request headers
-     * @param {int} [timeout=5000] - Max waiting time in miliseconds
-     * @param {function} success - Function to call if success
-     * @param {function} error - Function to call if unsuccessful response
-     * @param {string} url - request endpoint
+     * @param {string} [contentType=application/json; charset=UTF-8]
+     * @param {string} [headers={}] - Cabeceras adicionales
+     * @param {int} [timeout=5000] - Tiempo máximo de espera en milisegundos
+     * @param {function} [success] - Callback para gestionar peticiones con éxito
+     * @param {function} [error] - Callback para gestionar peticiones fallidas
+     * @param {string} url
      */
     static send({
         method = "GET",
