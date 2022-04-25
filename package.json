@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx webpack --config webpack.config.js --env.mode=production",
     "dev": "npx webpack --config webpack.config.js --env.mode=development",
-    "jsdoc": "./node_modules/.bin/jsdoc src -r -c jsdoc.json -d docs"
+    "jsdoc": "jsdoc -r -c jsdoc.json -d docs"
   },
   "repository": {
     "type": "git",
