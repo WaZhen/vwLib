@@ -5,7 +5,7 @@ import VwMapper from '../VwMapper/VwMapper';
 /**
  * <p>Clase para trabajar con listas de Velneo.</p>
  * <p>En caso de crear una instancia usando el constructor, se crea una propiedad vwRegisters que contiene un array de [VwRegister]{@link VwRegister}</p>
- * @extends VwTable
+ * @extends {VwTable}
  * @param {VRegisterList} VRegisterList [VRegisterList]{@link https://doc.velneo.com/velneo-vdevelop/scripts/lenguajes/javascript/clases/vregisterlist}
  */
 export default class VwList extends VwTable {
