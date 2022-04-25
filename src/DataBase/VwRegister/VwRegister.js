@@ -145,6 +145,7 @@ export default class VwRegister extends VwTable {
      * Carga los plurales del registro y devuelve un array de {@link VwRegister}
      * @param {string} pluralId id del plural a cargar
      * @returns {VwRegister[]}
+     * @method
      */
     loadPlurals = (pluralId) => {
         if (!pluralId) {
@@ -227,8 +228,8 @@ export default class VwRegister extends VwTable {
      * Returns a Json with every table field information and its value for the register
      * @param {string[]} arrMasterField Array of masters IDs to find
      * @param {string[]} arrFilter Array to filter the values wanted. If empty or not provided the function will return all the fields
-     * @return {getAllValuesReturn[]} 
-     *      Returns an array of objects with the information
+     * @return {getAllValuesReturn[]} Returns an array of objects with the information
+     * @method
      */
     getValues = (arrMasterField = ['NAME'], arrFilter = [], format = VwRegister.GET_VALUES_OBJECT) => {
 
@@ -299,6 +300,7 @@ export default class VwRegister extends VwTable {
     /**
      * Elimina el registro
      * @param {boolean} cascade true si quieres eliminar en cascada
+     * @method
      */
     deleteRegister = (cascade = false) => {
         const registerId = this.vRegister.fieldToString('ID');
@@ -312,6 +314,7 @@ export default class VwRegister extends VwTable {
 
     /**
      * Elimina todos los plurales del registro en cascada
+     * @method
      */
     deletePlurals() {
         const pluralsIdList = this.getPluralsArray();
@@ -390,6 +393,7 @@ export default class VwRegister extends VwTable {
 
     /**
      * Nombre plural de la tabla
+     * @type {string}
      */
     get pluralTableName() {
         this.vRegister.tableInfo().name();
@@ -397,6 +401,7 @@ export default class VwRegister extends VwTable {
 
     /**
      * Nombre singular de la tabla
+     * @type {string}
      */
     get singleTableName() {
         this.vRegister.tableInfo().singleName();
