@@ -37,7 +37,7 @@ export default class VwTable {
      */
 
     /**
-     * <p>Contiene un array de objetos que representan los campos</p>
+     * <p>Array de objetos que representan los campos</p>
      * @type {vWFields[]}
      */
     get vWFields() {
