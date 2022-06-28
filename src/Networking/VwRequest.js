@@ -55,9 +55,9 @@ export default class VwRequest {
         const requestSuccess = request.status >= 200 && request.status < 300;
 
         if (requestSuccess) {
-            success(request);
+             return success(request);
         } else {
-            error(request);
+            return error(request);
         }
     }
 }
