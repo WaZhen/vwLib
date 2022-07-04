@@ -6,6 +6,9 @@ const indexTypesNames = ['Clave única', 'Palabras', 'Múltiples claves', 'Acept
  */
 export default class VwTable {
     constructor(idRef) {
+        if(!idRef) {
+            throw new Error(`VwTable constructor. idRef should not be empty`);
+        }
         const vWProject = idRef.split("/")[0];
         const vWTable = idRef.split("/")[1];
         this.vWProject = theApp.projectInfo(vWProject);
