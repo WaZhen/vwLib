@@ -151,7 +151,8 @@ export default class VwRegister extends VwTable {
         if (!pluralId) {
             throw new Error(`LoadPlurals: pluralId not provided`);
         }
-        const list = this.vRegister.loadPlurals(pluralId);
+        const list = new VRegisterList(theRoot);
+        list.append(this.vRegister.loadPlurals(pluralId));
         return VwList.parseArray(list);
     }
 
