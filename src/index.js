@@ -32,6 +32,8 @@ import VwRegisterCreatorFromProcess from './VwRegisterCreatorFromProcess/VwRegis
 import VwProcess from './VwProcess/VwProcess';
 import VwTreeWidget from './VwTreeWidget/VwTreeWidget';
 
+import VwUtils from './VwUtils/VwUtils';
+
 export {
     AppConfiguration,
     VwList,
@@ -54,6 +56,7 @@ export {
     VwMdiView,
     VwCatcherEdit,
     VwFile,
+    VwUtils,
     // VwTreeWidget,
     // CsvParser,
 }
