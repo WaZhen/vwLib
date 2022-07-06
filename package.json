@@ -1,6 +1,6 @@
 {
   "name": "vwlib",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Javascript utilities for Velneo",
   "main": "src/index.js",
   "scripts": {
