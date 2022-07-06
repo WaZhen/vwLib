@@ -1,22 +1,6 @@
 export default class VwUtils {
-    /**
-     * 
-     * @param {boolean} log 
-     * @param {Error} error 
-     */
-    static manageError({log=false, error, message='', onlyAdmin=true}) {
-        if(log) {
-            // to do
-        } else {
-            if(onlyAdmin && !theApp.isAdministrator()) {
-                return;
-            }
-            alert(message + '\n\nLine number: ' + error.lineNumber + "\n\n" + error.message);
-        }
-    }
-
     static appendLog(logVariableId, textToAppend, color="black") {
-        const variableExists = Utils.variableExists(theRoot.objectInfo(), logVariableId);
+        const variableExists = VwUtils.variableExists(theRoot.objectInfo(), logVariableId);
         if(variableExists) {
             const previousLog = theRoot.varToString(logVariableId);
             if(previousLog) {
@@ -28,7 +12,7 @@ export default class VwUtils {
     }
 
     static prependLog(logVariableId, textToAppend, color="black") {
-        const variableExists = Utils.variableExists(theRoot.objectInfo(), logVariableId);
+        const variableExists = VwUtils.variableExists(theRoot.objectInfo(), logVariableId);
         if(variableExists) {
             const previousLog = theRoot.varToString(logVariableId);
             if(previousLog) {
