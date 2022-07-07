@@ -153,6 +153,7 @@ export default class VwRegister extends VwTable {
         }
         const list = new VRegisterList(theRoot);
         const referenceList = this.vRegister.loadPlurals(pluralId);
+        list.setTable(referenceList.tableInfo().idRef());
         if(referenceList.size() > 0) {
             list.append(referenceList);
             return VwList.parseArray(list);
